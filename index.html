@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cyber Shopp</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#fbfbfa;--ink:#141414;--mute:#6c6c68;--line:#e7e6e2;--soft:#f1f0ed;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost','Helvetica Neue',Arial,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans)}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,251,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;height:68px}
+.brand{display:flex;align-items:center;gap:12px;font:500 26px/1 var(--serif);letter-spacing:.01em}
+.brand img{height:36px;width:auto}
+.search{flex:1;max-width:380px;margin-left:auto}
+.search input{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:8px 2px;font:inherit;outline:0}
+.search input:focus{border-color:var(--ink)}
+.cartbtn{border:1px solid var(--ink);background:transparent;border-radius:99px;padding:7px 16px;font-size:14px}
+.cartbtn:hover{background:var(--ink);color:#fff}
+.hero{padding:88px 0 64px;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:end}
+.hero h1{font:500 clamp(44px,7vw,92px)/.98 var(--serif);margin:0;letter-spacing:-.01em}
+.hero p{color:var(--mute);max-width:34ch;margin:0}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 28px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:99px;padding:6px 16px;font-size:14px;color:var(--mute)}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:40px 28px;padding-bottom:96px}
+.card .ph{aspect-ratio:4/5;margin-bottom:14px;transition:transform .5s}
+.card:hover .ph{transform:scale(1.015)}
+.ph{display:grid;place-items:center;overflow:hidden;border-radius:2px}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph span{font:italic 400 64px var(--serif);color:rgba(20,20,20,.55)}
+.card h3{font:500 22px/1.2 var(--serif);margin:0}
+.card .m{display:flex;justify-content:space-between;color:var(--mute);font-size:14px;margin-top:2px}
+.empty{grid-column:1/-1;color:var(--mute);padding:40px 0}
+.crumb{padding:28px 0 8px;color:var(--mute);font-size:14px}
+.pd{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;padding:16px 0 56px}
+.gal .ph{aspect-ratio:1/1}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.thumbs button{padding:0;border:1px solid transparent;background:none;border-radius:2px}
+.thumbs button[aria-current=true]{border-color:var(--ink)}
+.thumbs .ph{aspect-ratio:1/1}.thumbs .ph span{font-size:24px}
+.pd h1{font:500 clamp(36px,5vw,56px)/1.05 var(--serif);margin:6px 0 8px}
+.price{font:500 28px var(--serif)}
+.pd p.d{color:var(--mute);max-width:46ch}
+.qty{display:inline-flex;border:1px solid var(--line);border-radius:99px;align-items:center}
+.qty button{border:0;background:none;width:36px;height:36px;font-size:18px}
+.qty span{min-width:24px;text-align:center}
+.btn{border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:99px;padding:12px 28px;font-weight:500}
+.btn:hover{background:#000;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.btn.o{background:transparent;color:var(--ink)}
+.buy{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:24px 0}
+.specs{border-top:1px solid var(--line);margin-top:28px}
+.specs div{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.specs dt{color:var(--mute)}
+.rev{padding:48px 0 96px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.rev h2,.terms h1{font:500 36px/1.1 var(--serif);margin:0 0 20px}
+.r{padding:16px 0;border-bottom:1px solid var(--line)}
+.r b{font-weight:500}.r small{color:var(--mute)}.r p{margin:6px 0 0}
+.stars{letter-spacing:2px}
+form.rf{display:grid;gap:12px}
+.rf input,.rf textarea,.rf select{border:1px solid var(--line);background:#fff;border-radius:2px;padding:10px 12px;font:inherit}
+.terms{max-width:720px;padding:56px 24px 96px}
+.terms h2{font:500 24px var(--serif);margin:32px 0 6px}.terms p{color:var(--mute);margin:0}
+footer{border-top:1px solid var(--line);padding:40px 0 48px;font-size:14px;color:var(--mute)}
+.fg{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.fg nav{display:flex;gap:20px;flex-wrap:wrap}
+.fg a:hover{color:var(--ink)}
+.ov{position:fixed;inset:0;background:rgba(20,20,20,.35);opacity:0;pointer-events:none;transition:opacity .25s;z-index:30}
+.ov.on{opacity:1;pointer-events:auto}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--bg);z-index:31;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) 24px calc(20px + env(safe-area-inset-bottom,0px))}
+aside.on{transform:none}
+aside h2{font:500 28px var(--serif);margin:0 0 12px;display:flex;justify-content:space-between}
+aside h2 button{border:0;background:none;font-size:24px}
+.items{flex:1;overflow:auto}
+.it{display:grid;grid-template-columns:64px 1fr auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}
+.it .ph{aspect-ratio:1/1}.it .ph span{font-size:22px}
+.it small{color:var(--mute)}
+.it .rm{border:0;background:none;color:var(--mute);font-size:13px;text-decoration:underline;padding:0}
+.tot{display:flex;justify-content:space-between;font:500 24px var(--serif);padding:16px 0}
+.note{font-size:13px;color:var(--mute);margin:10px 0 0;min-height:20px}
+@media(max-width:760px){.hero,.pd,.rev{grid-template-columns:1fr;gap:28px}.hero{padding:48px 0 36px}.brand span{display:none}.bar{gap:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+body{text-transform:uppercase}
+h1,h2,h3,.chip,.btn,.cartbtn,.crumb{letter-spacing:.08em}
+.hero h1{font-size:clamp(34px,5.4vw,70px);line-height:1.1}
+.card h3{font-size:19px}
+.brand span,.fg b{font-style:italic;text-transform:uppercase;letter-spacing:.14em;font-size:19px}
+body.prod main{text-transform:none}
+body.prod main *{letter-spacing:normal}
+.terms p,.chat,.ann p,.mq{text-transform:none;letter-spacing:0}
+.mq{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;font-size:13px}
+.mq #mqi{display:inline-flex;animation:mq 45s linear infinite;padding:7px 0}
+.mq:hover #mqi{animation-play-state:paused}
+.mq .g{display:flex;flex-shrink:0}
+.mq span{display:flex;align-items:center;padding:0 22px}
+.mq span::after{content:"";width:4px;height:4px;border-radius:50%;background:#fff;opacity:.5;margin-left:44px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.wa{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:#25d366;border:0;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.22);z-index:25}
+.wa svg{width:31px;height:31px;fill:#fff}
+.chat{position:fixed;right:20px;bottom:calc(90px + env(safe-area-inset-bottom,0px));width:min(360px,calc(100% - 40px));height:min(500px,calc(100% - 170px));background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);z-index:26;display:none;flex-direction:column;overflow:hidden;font-size:14px}
+.chat.on{display:flex}
+.ch{background:#128c7e;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.ch small{display:block;opacity:.85}.ch button{border:0;background:none;color:#fff;font-size:24px}
+.cm{flex:1;overflow:auto;padding:14px;background:var(--soft);display:flex;flex-direction:column;gap:8px}
+.b{max-width:85%;padding:8px 12px;border-radius:12px;background:#fff;white-space:pre-wrap}
+.b.u{align-self:flex-end;background:#d9fdd3}
+.cq{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px 0}
+.cq button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;font-size:13px}
+.cq button.hu{border-color:#128c7e;color:#128c7e}
+.cf{display:flex;gap:8px;padding:10px 12px}
+.cf input{flex:1;min-width:0;border:1px solid var(--line);border-radius:99px;padding:8px 14px;font:inherit}
+.sm{padding:6px 14px;font-size:13px}
+.ann{position:fixed;left:50%;top:50%;width:min(440px,calc(100% - 40px));max-height:80%;overflow:auto;background:var(--bg);border:1px solid var(--line);padding:30px 28px;z-index:40;transform:translate(-50%,-50%);transition:all .55s cubic-bezier(.6,0,.3,1);box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.ann.min{left:44px;top:calc(100% - 44px - env(safe-area-inset-bottom,0px));transform:translate(-50%,-50%) scale(.05);opacity:0;pointer-events:none}
+.ann h2{font:italic 500 30px var(--serif);margin:0 0 8px;text-transform:uppercase;letter-spacing:.1em}
+.ann h3{font:500 20px var(--serif);margin:0 0 4px;letter-spacing:.08em}
+.ai{padding:16px 0;border-top:1px solid var(--line)}.ai p{margin:0 0 12px;color:var(--mute)}
+.ax{position:absolute;top:10px;right:14px;border:0;background:none;font-size:26px}
+.annb{position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:50px;height:50px;border-radius:50%;background:var(--ink);border:0;display:none;place-items:center;z-index:25;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.annb.on{display:grid;animation:pop .4s .4s both}
+.annb i{position:absolute;top:-2px;right:-2px;background:#fff;color:var(--ink);border:1px solid var(--ink);border-radius:99px;font:500 11px/16px var(--sans);min-width:18px;text-align:center}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.rt{font:500 18px var(--serif);margin:28px 0 4px}
+.rl{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.rl .ph span{font-size:20px}.rl small{color:var(--mute)}
+.promo{display:flex;gap:10px;align-items:center;border:1px dashed var(--ink);padding:9px 12px;margin-top:10px}
+.promo input{flex:1;min-width:0;border:0;background:transparent;font:500 15px var(--sans);letter-spacing:.18em;text-transform:uppercase;outline:0}
+.promo span{font-size:13px;color:var(--mute)}.promo span.ok{color:#1c7a45}
+.sv{display:flex;justify-content:space-between;font-size:13px;color:#1c7a45;padding-top:8px}
+.tot s{font-size:16px;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){.mq #mqi,.annb.on{animation:none}}
+
+.nv{display:flex;gap:26px;margin-left:12px;font-size:14px;letter-spacing:.1em}
+.nv a{padding:4px 0;border-bottom:1px solid transparent}.nv a:hover{border-color:var(--ink)}
+.pw{position:relative}
+.tg{position:absolute;top:12px;left:12px;background:var(--ink);color:#fff;font:500 11px/1 var(--sans);font-style:normal;padding:6px 9px;letter-spacing:.1em}
+.m s,.price s{color:var(--mute);font-weight:400;margin-right:6px}
+.tb{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.tb select{border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;font-size:14px;padding:6px 2px;color:var(--mute)}
+.zn{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;padding-top:12px}
+.zn select{border:1px solid var(--line);background:#fff;padding:6px;font:inherit;max-width:200px}
+.ze{font-size:13px;color:var(--mute);display:flex;justify-content:space-between;padding-top:6px}
+.help details{border-bottom:1px solid var(--line);padding:14px 0}.help summary{cursor:pointer;font:500 20px var(--serif);letter-spacing:.06em}
+.help details p{margin-top:8px}
+.help table{width:100%;border-collapse:collapse;font-size:14px;text-transform:none}.help td{padding:10px 0;border-bottom:1px solid var(--line);color:var(--mute)}.help td:first-child{color:var(--ink)}
+
+
+.co{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;padding:48px 24px 96px}
+.co h1{font:500 40px/1.1 var(--serif);margin:0 0 24px}.co h2{font:500 24px var(--serif);margin:32px 0 12px}
+.fg2{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.co label{display:block;font-size:12px;letter-spacing:.1em;color:var(--mute)}
+.co input:not([type=checkbox]),.co select,.co textarea{display:block;width:100%;margin-top:6px;border:1px solid var(--line);background:#fff;padding:11px 12px;font:400 15px var(--sans);border-radius:2px;color:var(--ink)}
+.co input:invalid:not(:placeholder-shown){border-color:#b3261e}
+.co label.full{margin-bottom:16px}
+.co .ck{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink);margin:10px 0}.ck input{margin-top:4px}.ck a{text-decoration:underline}
+.bc{border:1px dashed var(--line);padding:14px 16px;margin-bottom:20px}
+.bc .btn{display:inline-block;margin-top:6px}
+.sum{position:sticky;top:120px;align-self:start;border:1px solid var(--line);padding:24px;background:#fff}
+.sum h2{margin-top:0}.sum .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:14px}
+.sum .gt{font:500 26px var(--serif);border-top:1px solid var(--line);margin-top:8px;padding-top:14px}
+#mp{width:100%;margin-top:14px}
+@media(max-width:760px){.co{grid-template-columns:1fr;gap:32px;padding-top:28px}.fg2{grid-template-columns:1fr}.sum{position:static}}
+
+/* animaciones */
+.ph{position:relative}.ph span{position:relative;z-index:1}
+.ph::after{content:"";position:absolute;inset:-25%;pointer-events:none;translate:0 var(--py,0px);background:radial-gradient(circle at calc(50% + var(--sx,0)*35%) calc(30% + var(--sy,0)*35%),rgba(255,255,255,.55),transparent 55%)}
+.ph>img{translate:0 var(--py,0px);transform:scale(1.15);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*90ms),transform .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*90ms)}
+.rv.in{opacity:1;transform:none}
+.card .ph{clip-path:inset(0 0 0 0);transform:perspective(700px) rotateX(calc(var(--my,0)*-6deg)) rotateY(calc(var(--mx,0)*6deg)) scale(var(--sc,1));transition:transform .45s cubic-bezier(.2,.7,.2,1),clip-path 1.1s cubic-bezier(.7,0,.2,1) calc(var(--d,0)*90ms)}
+.card.rv:not(.in) .ph{clip-path:inset(0 0 100% 0)}
+.card.rv:not(.in) .ph>img{transform:scale(1.45)}
+.card:hover{--sc:1.035}.card:hover .ph>img{transform:scale(1.22)}
+.card h3,.card .m{transition:transform .4s}.card:hover h3{transform:translateX(6px)}
+.w{display:inline-block}
+.pg .w{animation:wd .95s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*110ms + 150ms)}
+.pg .hero p{animation:fu .9s .55s cubic-bezier(.2,.7,.2,1) both}.pg .tb{animation:fu .9s .75s cubic-bezier(.2,.7,.2,1) both}
+.pg .pd,.pg .terms,.pg .co{animation:fu .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes wd{from{opacity:0;transform:translateY(55%) rotate(2deg)}}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}}
+#main .ph{animation:sw .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes sw{from{opacity:.2;transform:scale(1.04)}}
+.bump{animation:bm .5s}@keyframes bm{35%{transform:scale(1.14)}}
+.wa::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:ring 2.6s ease-out infinite}
+@keyframes ring{from{transform:scale(1);opacity:.7}to{transform:scale(1.7);opacity:0}}
+.wa{transition:transform .3s}.wa:hover{transform:scale(1.08) rotate(-6deg)}
+.brand img{transition:transform .5s}.brand:hover img{transform:rotate(-10deg) scale(1.08)}
+header{transition:box-shadow .3s}header.sc{box-shadow:0 6px 24px rgba(0,0,0,.06)}
+.btn{transition:transform .2s,box-shadow .2s,background .2s}.btn:active{transform:scale(.97)}
+.chip{transition:background .25s,color .25s}
+@media(prefers-reduced-motion:reduce){.rv,.card .ph,.ph>img{opacity:1!important;transform:none!important;clip-path:none!important;translate:none!important}.pg *,.wa::before,#main .ph,.bump{animation:none!important}}
+@media(max-width:760px){.bar{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:8px;gap:10px 14px}.brand{order:1}.search{order:2}.cartbtn{order:3}.nv{display:flex!important;order:4;width:100%;margin:0;gap:22px;overflow-x:auto;white-space:nowrap;font-size:13px}}
+
+[hidden]{display:none!important}
+.aov{position:fixed;inset:0;z-index:39;background:rgba(20,20,20,.22);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .45s}
+.aov.on{opacity:1;pointer-events:auto}
+body.noscroll{overflow:hidden}
+.co .pm{margin:8px 0}
+
+.wrap>.co{padding:24px 0 96px}
+.co input:not([type=checkbox]):not([type=radio]),.co select,.co textarea{display:block}
+.co input[type=radio]{width:auto;display:inline-block;margin:3px 0 0;padding:0}
+.stp{display:flex;max-width:640px;margin:0 auto;padding:36px 0 8px;list-style:none}
+.stp li{flex:1;position:relative;text-align:center;font-size:14px;color:var(--mute)}
+.stp li::before{content:"";position:absolute;top:15px;left:-50%;width:100%;height:2px;background:var(--line);transition:background .5s}
+.stp li:first-child::before{display:none}
+.stp li.on::before,.stp li.done::before{background:var(--ink)}
+.stp .c{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;margin:0 auto 6px;border-radius:50%;background:#fff;border:2px solid var(--line);font-weight:500}
+.stp li.on,.stp li.done{color:var(--ink)}.stp li.on .c{background:var(--ink);border-color:var(--ink);color:#fff}.stp li.done .c{border-color:var(--ink)}
+.tp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.co label.tc{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:16px;cursor:pointer;color:var(--ink);letter-spacing:0;transition:border-color .2s,box-shadow .2s}
+.tc:has(input:checked){border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.tc.off{opacity:.5;cursor:not-allowed}.tc b{display:block;font:500 18px var(--serif);letter-spacing:.06em}.tc small{display:block;color:var(--mute);font-size:13px;text-transform:none}
+.p51{display:flex;margin-top:6px;border:1px solid var(--line);background:#fff}.p51 span{padding:11px 12px;border-right:1px solid var(--line);color:var(--mute);font:400 15px var(--sans)}.co .p51 input{border:0;margin:0}
+.pys{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.pay{display:block;text-align:left;border:1px solid var(--ink);padding:18px 20px;border-radius:2px;background:transparent;transition:transform .2s,box-shadow .2s}
+.pay b{display:block;font:500 20px var(--serif);letter-spacing:.06em}.pay small{display:block;opacity:.75;font-size:13px;margin-top:2px;text-transform:none;letter-spacing:0}
+.pay.mp{background:var(--ink);color:#fff}.pay:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15)}.pay:disabled{opacity:.5}
+@media(max-width:760px){.tp,.pys{grid-template-columns:1fr}}
+
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: url(images/marker-icon.png);
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+
+#map{height:320px;margin-bottom:8px;position:relative;z-index:0;isolation:isolate;background:#e9e8e4;border:1px solid var(--line)}
+.mpb{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.pin i{display:block;width:28px;height:28px;background:var(--ink);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.co h2+.fg2{margin-top:4px}
+
+/* ===== ajustes para celular ===== */
+html,body{overflow-x:clip}
+button,a,select,summary{touch-action:manipulation}
+.btn{display:inline-block;line-height:1.3;text-align:center}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+.tb .chips{flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding-bottom:4px}
+.tb .chip{white-space:nowrap;flex:none}
+@media(max-width:760px){
+  header{top:calc(env(safe-area-inset-top,0px) - 32px)}
+  .search{flex:1;min-width:0}
+  .nv a{padding:8px 0}
+  .chip{padding:8px 16px}
+  .qty button{width:42px;height:42px}
+  .rm{padding:8px 0}
+  .tb{flex-direction:column;align-items:stretch}.tb select{width:100%}
+  .buy .btn{flex:1}
+  .acts .btn{flex:1 1 100%}
+  input,select,textarea,.search input,.cf input,.co input:not([type=checkbox]):not([type=radio]),.co select,.co textarea{font-size:16px}
+  .chat{left:12px;right:12px;width:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));height:min(520px,calc(100dvh - 190px))}
+  .ann{max-height:80dvh;padding:26px 20px}
+  #map{height:280px}
+  .terms,.rev,.pd{padding-left:0;padding-right:0}
+  .terms{padding-left:24px;padding-right:24px}
+  .stp{padding-top:24px}
+}
+@media(max-width:560px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:28px 14px;padding-bottom:64px}
+  .card h3{font-size:15px;letter-spacing:.05em}
+  .card .m{flex-direction:column;font-size:13px;gap:0}
+  .card .ph span{font-size:42px}
+  .hero{padding:36px 0 28px}
+  .card:hover h3{transform:none}
+}
+@media(hover:none){.card:hover{--sc:1}.card:hover .ph>img{transform:scale(1.15)}}
+</style></head>
+<body>
+<header><div class="mq" aria-label="Frases de la tienda"><div id="mqi"></div></div><div class="wrap bar">
+<a class="brand" href="#/" aria-label="Cyber Shopp, inicio"><img alt="" src="data:image/png;base64,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"><span>Cyber Shopp</span></a>
+<nav class="nv" aria-label="Principal"><a href="#/" id="nof">Ofertas</a><a href="#" id="nch" target="_blank" rel="noopener">Canal de difusión</a></nav>
+<div class="search"><input id="q" type="search" placeholder="Buscar productos" aria-label="Buscar productos"></div>
+<button class="cartbtn" id="cb" aria-label="Abrir carrito">Carrito (<span id="cc">0</span>)</button>
+</div></header>
+<main id="app"></main>
+<footer><div class="wrap fg">
+<div><b style="font:500 22px var(--serif);color:var(--ink)">Cyber Shopp</b><br>cybershopp.com</div>
+<nav id="soc"></nav>
+<nav><a href="#/ayuda">Ayuda</a><a href="#" id="fch" target="_blank" rel="noopener">Canal de difusión</a><a href="#/terminos">Términos y condiciones</a><a href="#/terminos">Libro de reclamaciones</a></nav>
+</div></footer>
+<div class="ov" id="ov"></div>
+<aside id="dr" aria-label="Carrito de compras" aria-hidden="true"></aside>
+<div class="aov on" id="aov"></div>
+<section class="ann" id="an" role="dialog" aria-label="Novedades"></section>
+<button class="annb" id="ab" aria-label="Ver novedades"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 20a2 2 0 01-3.4 0"/></svg><i id="an_n"></i></button>
+<button class="wa" id="wa" aria-label="Abrir chat de WhatsApp" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></button>
+<section class="chat" id="ch" aria-label="Chat con Cyber Shopp"><div class="ch"><div><b>Cyber Shopp</b><small>Asistente virtual</small></div><button id="cx" aria-label="Cerrar chat">×</button></div><div class="cm" id="cm" aria-live="polite"></div><div class="cq" id="cq"></div><form class="cf" id="cf"><input id="ci" placeholder="Escribe tu mensaje" autocomplete="off" aria-label="Mensaje"><button class="btn sm">Enviar</button></form></section>
+<script>
+/* ===== CONFIGURACIÓN: edita aquí ===== */
+const CONFIG={
+  money:'S/',
+  social:{Instagram:'https://instagram.com/cybershopp',Facebook:'https://facebook.com/cybershopp',TikTok:'https://tiktok.com/@cybershopp',WhatsApp:'https://wa.me/51000000000'},
+  // URL de TU servidor que crea la preferencia de Mercado Pago y devuelve {init_point}. Recibe POST {items:[{id,title,quantity,unit_price}]}
+  checkoutEndpoint:'',
+  whatsapp:'51000000000',
+  channelUrl:'https://whatsapp.com/channel/TU-CANAL', // enlace de tu canal de difusión de WhatsApp
+  // Plazos de entrega por zona (ejemplo, ajústalos). El envío ya está incluido en los precios
+  shipping:{'Lima – distritos centrales':{days:'24 horas'},'Resto de Lima y Callao':{days:'1 a 2 días'},'Provincias':{days:'3 a 6 días'}}, // tu número con código de país, sin + ni espacios
+  analyticsEndpoint:'', // métricas ocultas: URL de tu Google Apps Script (ver archivo metricas-apps-script.gs)
+  promoCode:'CYBER10',promoPercent:10,
+  phrases:['Envío incluido en todos nuestros precios','Paga seguro con Mercado Pago','Pocas piezas, bien elegidas','Cambios y devoluciones dentro de 7 días','Tu descuento se aplica automáticamente en el carrito'],
+  announcements:[
+    {title:'Nuevo: Auriculares Aura',text:'Cancelación de ruido activa y 40 horas de batería. Ya disponibles.',link:'#/producto/aura',cta:'Ver producto'},
+    {title:'Comunicado',text:'Despachamos pedidos de lunes a sábado. Los pagos aprobados antes de las 3 p. m. salen el mismo día.'}
+  ]
+};
+/* images: agrega URLs o data-URIs de tus fotos reales. Sin fotos se muestra un fondo de color. */
+const P=[
+{id:'aura',name:'Auriculares Aura',cat:'Audio',price:289,old:349,tag:'Oferta',tone:'#e8e6e1',images:[],short:'Cancelación de ruido activa y 40 horas de batería.',desc:'Auriculares inalámbricos con diseño liviano y almohadillas de espuma viscoelástica. Pensados para largas jornadas de trabajo, viajes y música sin distracciones.',specs:[['Batería','40 h'],['Conexión','Bluetooth 5.3'],['Cancelación de ruido','Activa'],['Carga','USB-C'],['Garantía','12 meses']],rev:[['Camila R.',5,'Se sienten ligeros y el sonido es muy limpio. Llegaron rápido.'],['Jorge T.',4,'Muy buena batería. Las almohadillas podrían ser un poco más suaves.']]},
+{id:'meridian',name:'Reloj Meridian',cat:'Accesorios',price:349,tag:'Nuevo',tone:'#dfe3e4',images:[],short:'Caja de acero, correa de cuero y cristal de zafiro.',desc:'Reloj de cuarzo con esfera minimalista y caja de acero inoxidable. Resistente al agua para el uso diario.',specs:[['Caja','Acero inoxidable 40 mm'],['Cristal','Zafiro'],['Correa','Cuero genuino'],['Resistencia al agua','5 ATM'],['Garantía','12 meses']],rev:[['Lucía M.',5,'Elegante y discreto. Justo lo que buscaba para regalar.']]},
+{id:'lumen',name:'Lámpara Lumen',cat:'Hogar',price:219,old:259,tag:'Oferta',tone:'#ebe7df',images:[],short:'Luz cálida regulable con base de cerámica.',desc:'Lámpara de mesa con tres niveles de intensidad y luz cálida. La base de cerámica mate le da un acabado sobrio para cualquier escritorio o velador.',specs:[['Altura','38 cm'],['Luz','Cálida 2700 K'],['Niveles','3 intensidades'],['Material','Cerámica y metal'],['Garantía','6 meses']],rev:[['Andrea P.',5,'Crea un ambiente muy acogedor en mi cuarto.'],['Marco V.',5,'Se ve mucho mejor en persona.']]},
+{id:'atlas',name:'Mochila Atlas',cat:'Accesorios',price:259,tag:'Últimas unidades',tone:'#e4e4e0',images:[],short:'Tela repelente al agua y compartimento para laptop de 15".',desc:'Mochila urbana de líneas limpias, con bolsillos internos organizados y espalda acolchada para uso diario.',specs:[['Capacidad','22 L'],['Laptop','Hasta 15"'],['Material','Poliéster repelente al agua'],['Peso','780 g'],['Garantía','6 meses']],rev:[['Diego S.',4,'Cómoda y espaciosa. El material se siente resistente.']]},
+{id:'nord',name:'Botella Térmica Nórd',cat:'Hogar',price:89,tone:'#e1e5e1',images:[],short:'Mantiene el frío 24 horas y el calor 12.',desc:'Botella de acero inoxidable de doble pared, con tapa hermética y acabado mate.',specs:[['Capacidad','750 ml'],['Frío','24 h'],['Calor','12 h'],['Material','Acero inoxidable 304'],['Garantía','6 meses']],rev:[['Valeria N.',5,'No se derrama y mantiene el agua helada todo el día.']]},
+{id:'flux',name:'Cargador Flux',cat:'Tecnología',price:129,old:159,tag:'Oferta',tone:'#e6e2e8',images:[],short:'Carga inalámbrica rápida de 15 W.',desc:'Base de carga inalámbrica compacta con superficie antideslizante. Compatible con los principales teléfonos y estuches delgados.',specs:[['Potencia','15 W'],['Estándar','Qi'],['Entrada','USB-C'],['Protección','Sobrecalentamiento'],['Garantía','12 meses']],rev:[['Renzo C.',5,'Carga rápido y no se calienta.'],['Paola L.',4,'Muy práctico en el velador.']]}
+];
+/* ===== utilidades ===== */
+const SID=Math.random().toString(36).slice(2,9);
+function track(ev,det=''){try{const o={t:new Date().toISOString(),e:ev,d:String(det).slice(0,80),s:SID,w:innerWidth<760?'movil':'pc'};(window.dataLayer=window.dataLayer||[]).push({event:ev,detail:o.d});if(CONFIG.analyticsEndpoint)fetch(CONFIG.analyticsEndpoint,{method:'POST',mode:'no-cors',keepalive:true,body:JSON.stringify(o)}).catch(()=>{})}catch(e){}}
+const $=s=>document.querySelector(s);
+const tagTxt=p=>[p.tag,p.old&&'−'+Math.round((1-p.price/p.old)*100)+'%'].filter(Boolean).join(' '),pr=p=>(p.old?`<s>${fm(p.old)}</s>`:'')+fm(p.price);
+const fm=n=>CONFIG.money+' '+n.toFixed(2),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const CODE=CONFIG.promoCode,PCT=CONFIG.promoPercent/100;let promo={t:'',done:false,run:false,iv:0};
+let zone=store.get('cs_zone',Object.keys(CONFIG.shipping)[0]);if(!CONFIG.shipping[zone])zone=Object.keys(CONFIG.shipping)[0];
+let ord=null,map=null,mk=null;
+let cart=store.get('cs_cart',{}),filt={q:'',cat:'Todo',sort:''},thumb=0;
+const ph=(p,i=0,cls='')=>p.images[i]?`<div class="ph ${cls}"><img src="${p.images[i]}" alt="${esc(p.name)}"></div>`:`<div class="ph ${cls}" style="background:${p.tone};filter:${i?'brightness('+(1-i*.03)+')':'none'}"><span>${esc(p.name[0])}</span></div>`;
+/* ===== vistas ===== */
+const W=s=>s.split(' ').map((w,i)=>`<span class="w" style="--i:${i}">${w}</span>`).join(' ');
+function home(){
+  const cats=['Todo','Ofertas',...new Set(P.map(p=>p.cat))];
+  const list=P.filter(p=>(filt.cat=='Todo'||(filt.cat=='Ofertas'?!!p.old:p.cat==filt.cat))&&(p.name+p.cat+p.short).toLowerCase().includes(filt.q.toLowerCase())).sort((a,b)=>filt.sort=='asc'?a.price-b.price:filt.sort=='desc'?b.price-a.price:0);
+  $('#app').innerHTML=`<div class="wrap"><section class="hero"><h1>${W('Pocas piezas, bien elegidas.')}</h1><p>Una selección breve de objetos para el día a día, con envíos y pagos seguros.</p></section>
+  <div class="tb"><div class="chips" style="margin:0">${cats.map(c=>`<button class="chip" aria-pressed="${c==filt.cat}" data-cat="${c}">${c}</button>`).join('')}</div><select id="so" aria-label="Ordenar"><option value="">Ordenar por</option><option value="asc"${filt.sort=='asc'?' selected':''}>Menor precio</option><option value="desc"${filt.sort=='desc'?' selected':''}>Mayor precio</option></select></div>
+  <div class="grid">${list.map(p=>`<a class="card" href="#/producto/${p.id}"><div class="pw">${ph(p)}${tagTxt(p)?`<em class="tg">${tagTxt(p)}</em>`:''}</div><h3>${p.name}</h3><div class="m"><span>${p.cat}</span><span>${pr(p)}</span></div></a>`).join('')||'<p class="empty">No encontramos productos con esa búsqueda. Prueba con otra palabra.</p>'}</div></div>`;
+  document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filt.cat=b.dataset.cat;home()});$('#so').onchange=e=>{filt.sort=e.target.value;home()};
+}
+function product(id){
+  const p=P.find(x=>x.id==id);if(!p)return home();
+  const mine=store.get('cs_rev_'+id,[]),revs=[...p.rev.map(r=>({n:r[0],s:r[1],t:r[2]})),...mine];
+  const avg=revs.reduce((a,r)=>a+r.s,0)/revs.length;let qty=1;
+  $('#app').innerHTML=`<div class="wrap"><div class="crumb"><a href="#/">Tienda</a> / ${p.cat}</div>
+  <section class="pd"><div class="gal"><div id="main">${ph(p,thumb)}</div><div class="thumbs">${[0,1,2,3].map(i=>`<button data-i="${i}" aria-label="Foto ${i+1}" ${i==thumb?'aria-current="true"':''}>${ph(p,i)}</button>`).join('')}</div></div>
+  <div><h1>${p.name}</h1><div class="price">${pr(p)}${tagTxt(p)?` <em class="tg" style="position:static;vertical-align:middle">${tagTxt(p)}</em>`:''}</div><p class="stars" aria-label="Valoración ${avg.toFixed(1)} de 5">${'★'.repeat(Math.round(avg))}${'☆'.repeat(5-Math.round(avg))} <small style="color:var(--mute);letter-spacing:0">${revs.length} comentarios</small></p>
+  <p class="d">${p.desc}</p>
+  <div class="buy"><div class="qty"><button id="mn" aria-label="Menos">−</button><span id="qv">1</span><button id="pl" aria-label="Más">+</button></div><button class="btn" id="add">Añadir al carrito</button></div>
+  <dl class="specs" style="margin-bottom:0">${p.specs.map(s=>`<div><dt>${s[0]}</dt><dd style="margin:0">${s[1]}</dd></div>`).join('')}</dl></div></section>
+  <section class="rev"><div><h2>Comentarios</h2>${revs.map(r=>`<div class="r"><b>${esc(r.n)}</b> <span class="stars">${'★'.repeat(r.s)}</span><p>${esc(r.t)}</p></div>`).join('')}</div>
+  <div><h2>Deja tu comentario</h2><form class="rf" id="rf"><input name="n" placeholder="Tu nombre" required maxlength="40"><select name="s" aria-label="Puntuación"><option value="5">5 estrellas</option><option value="4">4 estrellas</option><option value="3">3 estrellas</option><option value="2">2 estrellas</option><option value="1">1 estrella</option></select><textarea name="t" rows="4" placeholder="¿Qué te pareció el producto?" required maxlength="400"></textarea><button class="btn o" style="justify-self:start">Publicar comentario</button></form></div></section></div>`;
+  document.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{thumb=+b.dataset.i;$('#main').innerHTML=ph(p,thumb);document.querySelectorAll('.thumbs button').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true')});
+  $('#mn').onclick=()=>{qty=Math.max(1,qty-1);$('#qv').textContent=qty};$('#pl').onclick=()=>{qty++;$('#qv').textContent=qty};
+  $('#add').onclick=()=>{cart[id]=(cart[id]||0)+qty;track('agregar',id);save();openCart()};
+  $('#rf').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);mine.push({n:f.get('n'),s:+f.get('s'),t:f.get('t')});store.set('cs_rev_'+id,mine);product(id)};
+}
+function terms(){
+  const S=[['Información general','Cyber Shopp, con sitio web cybershopp.com, ofrece productos de venta en línea. Al realizar una compra aceptas estos términos. Podemos actualizarlos y la versión vigente es la publicada en esta página.'],['Productos y precios','Los precios se muestran en soles e incluyen impuestos, salvo que se indique lo contrario. Las imágenes son referenciales. Nos reservamos el derecho de corregir errores en precios o descripciones.'],['Compras y pagos','Los pagos se procesan mediante Mercado Pago. Cyber Shopp no almacena datos de tarjetas. El pedido se confirma cuando el pago es aprobado.'],['Envíos','El costo de envío está incluido en el precio de los productos. El plazo depende de tu ubicación y se informa antes de pagar. Recibirás los datos de seguimiento por correo o WhatsApp.'],['Cambios y devoluciones','Puedes solicitar un cambio o devolución dentro de los 7 días posteriores a la entrega, con el producto sin uso y en su empaque original. Escríbenos por nuestras redes para iniciar el trámite.'],['Garantía','Cada producto indica su garantía en su página. Cubre defectos de fabricación, no daños por mal uso.'],['Privacidad','Usamos tus datos solo para procesar pedidos y atenderte. No los compartimos con terceros, salvo los necesarios para el pago y el envío.'],['Libro de reclamaciones','Puedes registrar un reclamo o queja escribiéndonos por cualquiera de nuestros canales. Responderemos en el plazo que establece la ley.']];
+  $('#app').innerHTML=`<div class="terms wrap"><h1>Términos y condiciones</h1><p>Última actualización: octubre de 2026</p>${S.map(s=>`<h2>${s[0]}</h2><p>${s[1]}</p>`).join('')}</div>`;
+}
+function help(){
+  const Q=[['¿Cuánto demora mi pedido?','Depende de tu zona. Revisa la tabla de cobertura. El envío ya está incluido en el precio.'],['¿Cómo pago?','Con Mercado Pago, de forma segura, con tarjeta u otros medios disponibles.'],['¿Puedo cambiar o devolver un producto?','Sí, dentro de los 7 días posteriores a la entrega, con el producto sin uso y en su empaque original.'],['¿Cómo uso mi código de descuento?','Se aplica automáticamente cuando abres tu carrito.']];
+  $('#app').innerHTML=`<div class="terms help wrap"><h1>Ayuda</h1><h2>Canales de atención</h2><p>Escríbenos por WhatsApp con el botón verde, o por nuestras redes sociales. Respondemos de lunes a sábado.</p>
+  <h2>Cobertura de delivery</h2><table>${Object.entries(CONFIG.shipping).map(([z,s])=>`<tr><td>${z}</td><td>Envío incluido</td><td>${s.days}</td></tr>`).join('')}</table>
+  <h2>Preguntas frecuentes</h2>${Q.map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('')}</div>`;
+}
+/* ===== carrito ===== */
+const save=()=>{store.set('cs_cart',cart);{const c=Object.values(cart).reduce((a,b)=>a+b,0),b=$('#cb');if(c>+$('#cc').textContent){b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump')}$('#cc').textContent=c}renderCart()};
+function renderCart(){
+  const ids=Object.keys(cart).filter(i=>P.some(p=>p.id==i)),total=ids.reduce((a,i)=>a+cart[i]*P.find(p=>p.id==i).price,0);
+  if(!ids.length){clearInterval(promo.iv);promo.t='';promo.done=false;promo.run=false}
+  const disc=promo.done?total*PCT:0,fin=total-disc,cats=new Set(ids.map(i=>P.find(p=>p.id==i).cat));
+  const rel=P.filter(p=>!cart[p.id]).sort((a,b)=>cats.has(b.cat)-cats.has(a.cat)).slice(0,3);
+  $('#dr').innerHTML=`<h2>Tu carrito <button id="x" aria-label="Cerrar">×</button></h2><div class="items">${ids.map(i=>{const p=P.find(x=>x.id==i);return `<div class="it">${ph(p)}<div><b style="font-weight:500">${p.name}</b><br><small>${fm(p.price)} × ${cart[i]}</small><br><button class="rm" data-rm="${i}">Quitar</button></div><div class="qty"><button data-d="-1" data-i="${i}" aria-label="Menos">−</button><span>${cart[i]}</span><button data-d="1" data-i="${i}" aria-label="Más">+</button></div></div>`}).join('')||'<p class="empty">Tu carrito está vacío. Elige un producto para empezar.</p>'}
+  ${rel.length?`<h3 class="rt">También te puede gustar</h3>${rel.map(p=>`<div class="rl">${ph(p)}<div><b style="font-weight:500">${p.name}</b><br><small>${fm(p.price)}</small></div><button class="btn o sm" data-ra="${p.id}">Añadir</button></div>`).join('')}`:''}</div>
+  ${ids.length?`<div class="promo"><input id="pc" readonly value="${promo.t}" placeholder="Código promocional" aria-label="Código promocional"><span class="${promo.done?'ok':''}">${promo.done?'Aplicado':'Aplicando…'}</span></div>`:''}${promo.done?`<div class="sv"><span>Ahorras ${fm(disc)}</span><span>${CODE} −${CONFIG.promoPercent}%</span></div>`:''}
+  <div class="tot"><span>Total</span><span>${promo.done?`<s>${fm(total)}</s> `:''}${fm(fin)}</span></div><button class="btn" id="pay" ${ids.length?'':'disabled'}>Continuar con la compra</button><p class="note" id="nt">Envío incluido en el precio.</p>`;
+  $('#x').onclick=closeCart;
+  document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{delete cart[b.dataset.rm];save()});
+  document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const i=b.dataset.i;cart[i]+=+b.dataset.d;if(cart[i]<1)delete cart[i];save()});
+  document.querySelectorAll('[data-ra]').forEach(b=>b.onclick=()=>{cart[b.dataset.ra]=1;track('agregar_relacionado',b.dataset.ra);save()});
+  $('#pay').onclick=()=>{closeCart();if(location.hash!='#/carrito')location.hash='#/carrito'};
+  if(ids.length&&!promo.done&&!promo.run&&$('#dr').classList.contains('on'))setTimeout(typePromo,700);
+}
+function typePromo(){if(promo.run||promo.done)return;promo.run=true;promo.t='';promo.iv=setInterval(()=>{promo.t=CODE.slice(0,promo.t.length+1);const e=$('#pc');if(e)e.value=promo.t;if(promo.t==CODE){clearInterval(promo.iv);promo.done=true;promo.run=false;renderCart()}},170)}
+const UBI={"Amazonas":{"Chachapoyas":["Asunción","Balsas","Chachapoyas","Cheto","Chiliquin","Chuquibamba","Granada","Huancas","La Jalca","Leimebamba","Levanto","Magdalena","Mariscal Castilla","Molinopampa","Montevideo","Olleros","Quinjalca","San Francisco de Daguas","San Isidro de Maino","Soloco","Sonche"],"Bagua":["Aramango","Bagua","Copallin","El Parco","Imaza","La Peca"],"Bongará":["Chisquilla","Churuja","Corosha","Cuispes","Florida","Jazan","Jumbilla","Recta","San Carlos","Shipasbamba","Valera","Yambrasbamba"],"Condorcanqui":["El Cenepa","Nieva","Río Santiago"],"Luya":["Camporredondo","Cocabamba","Colcamar","Conila","Inguilpata","Lamud","Longuita","Lonya Chico","Luya","Luya Viejo","María","Ocalli","Ocumal","Pisuquia","Providencia","San Cristóbal","San Francisco de Yeso","San Jerónimo","San Juan de Lopecancha","Santa Catalina","Santo Tomas","Tingo","Trita"],"Rodríguez de Mendoza":["Chirimoto","Cochamal","Huambo","Limabamba","Longar","Mariscal Benavides","Milpuc","Omia","San Nicolás","Santa Rosa","Totora","Vista Alegre"],"Utcubamba":["Bagua Grande","Cajaruro","Cumba","El Milagro","Jamalca","Lonya Grande","Yamon"]},"Áncash":{"Huaraz":["Cochabamba","Colcabamba","Huanchay","Huaraz","Independencia","Jangas","La Libertad","Olleros","Pampas Grande","Pariacoto","Pira","Tarica"],"Aija":["Aija","Coris","Huacllan","La Merced","Succha"],"Antonio Raymondi":["Aczo","Chaccho","Chingas","Llamellin","Mirgas","San Juan de Rontoy"],"Asunción":["Acochaca","Chacas"],"Bolognesi":["Abelardo Pardo Lezameta","Antonio Raymondi","Aquia","Cajacay","Canis","Chiquian","Colquioc","Huallanca","Huasta","Huayllacayan","La Primavera","Mangas","Pacllon","San Miguel de Corpanqui","Ticllos"],"Carhuaz":["Acopampa","Amashca","Anta","Ataquero","Carhuaz","Marcara","Pariahuanca","San Miguel de Aco","Shilla","Tinco","Yungar"],"Carlos Fermín Fitzcarrald":["San Luis","San Nicolás","Yauya"],"Casma":["Buena Vista Alta","Casma","Comandante Noel","Yautan"],"Corongo":["Aco","Bambas","Corongo","Cusca","La Pampa","Yanac","Yupan"],"Huari":["Anra","Cajay","Chavin de Huantar","Huacachi","Huacchis","Huachis","Huantar","Huari","Masin","Paucas","Ponto","Rahuapampa","Rapayan","San Marcos","San Pedro de Chana","Uco"],"Huarmey":["Cochapeti","Culebras","Huarmey","Huayan","Malvas"],"Huaylas":["Caraz","Huallanca","Huata","Huaylas","Mato","Pamparomas","Pueblo Libre","Santa Cruz","Santo Toribio","Yuracmarca"],"Mariscal Luzuriaga":["Casca","Eleazar Guzmán Barron","Fidel Olivas Escudero","Llama","Llumpa","Lucma","Musga","Piscobamba"],"Ocros":["Acas","Cajamarquilla","Carhuapampa","Cochas","Congas","Llipa","Ocros","San Cristóbal de Rajan","San Pedro","Santiago de Chilcas"],"Pallasca":["Bolognesi","Cabana","Conchucos","Huacaschuque","Huandoval","Lacabamba","Llapo","Pallasca","Pampas","Santa Rosa","Tauca"],"Pomabamba":["Huayllan","Parobamba","Pomabamba","Quinuabamba"],"Recuay":["Catac","Cotaparaco","Huayllapampa","Llacllin","Marca","Pampas Chico","Pararin","Recuay","Tapacocha","Ticapampa"],"Santa":["Chimbote","Coishco","Cáceres del Perú","Macate","Moro","Nepeña","Nuevo Chimbote","Samanco","Santa"],"Sihuas":["Acobamba","Alfonso Ugarte","Cashapampa","Chingalpo","Huayllabamba","Quiches","Ragash","San Juan","Sicsibamba","Sihuas"],"Yungay":["Cascapara","Mancos","Matacoto","Quillo","Ranrahirca","Shupluy","Yanama","Yungay"]},"Apurímac":{"Abancay":["Abancay","Chacoche","Circa","Curahuasi","Huanipaca","Lambrama","Pichirhua","San Pedro de Cachora","Tamburco"],"Andahuaylas":["Andahuaylas","Andarapa","Chiara","Huancarama","Huancaray","Huayana","José María Arguedas","Kaquiabamba","Kishuara","Pacobamba","Pacucha","Pampachiri","Pomacocha","San Antonio de Cachi","San Jerónimo","San Miguel de Chaccrampa","Santa María de Chicmo","Talavera","Tumay Huaraca","Turpo"],"Antabamba":["Antabamba","El Oro","Huaquirca","Juan Espinoza Medrano","Oropesa","Pachaconas","Sabaino"],"Aymaraes":["Capaya","Caraybamba","Chalhuanca","Chapimarca","Colcabamba","Cotaruse","Ihuayllo","Justo Apu Sahuaraura","Lucre","Pocohuanca","San Juan de Chacña","Sañayca","Soraya","Tapairihua","Tintay","Toraya","Yanaca"],"Cotabambas":["Challhuahuacho","Cotabambas","Coyllurqui","Haquira","Mara","Tambobamba"],"Chincheros":["Anco_Huallo","Chincheros","Cocharcas","El Porvenir","Huaccana","Los Chankas","Ocobamba","Ongoy","Ranracancha","Rocchacc","Uranmarca"],"Grau":["Chuquibambilla","Curasco","Curpahuasi","Gamarra","Huayllati","Mamara","Micaela Bastidas","Pataypampa","Progreso","San Antonio","Santa Rosa","Turpay","Vilcabamba","Virundo"]},"Arequipa":{"Arequipa":["Alto Selva Alegre","Arequipa","Cayma","Cerro Colorado","Characato","Chiguata","Jacobo Hunter","José Luis Bustamante Y Rivero","La Joya","Mariano Melgar","Miraflores","Mollebaya","Paucarpata","Pocsi","Polobaya","Quequeña","Sabandia","Sachaca","San Juan de Siguas","San Juan de Tarucani","Santa Isabel de Siguas","Santa Rita de Siguas","Socabaya","Tiabaya","Uchumayo","Vitor","Yanahuara","Yarabamba","Yura"],"Camaná":["Camaná","José María Quimper","Mariano Nicolás Valcárcel","Mariscal Cáceres","Nicolás de Pierola","Ocoña","Quilca","Samuel Pastor"],"Caravelí":["Acarí","Atico","Atiquipa","Bella Unión","Cahuacho","Caravelí","Chala","Chaparra","Huanuhuanu","Jaqui","Lomas","Quicacha","Yauca"],"Castilla":["Andagua","Aplao","Ayo","Chachas","Chilcaymarca","Choco","Huancarqui","Machaguay","Orcopampa","Pampacolca","Tipan","Uraca","Uñon","Viraco"],"Caylloma":["Achoma","Cabanaconde","Callalli","Caylloma","Chivay","Coporaque","Huambo","Huanca","Ichupampa","Lari","Lluta","Maca","Madrigal","Majes","San Antonio de Chuca","Sibayo","Tapay","Tisco","Tuti","Yanque"],"Condesuyos":["Andaray","Cayarani","Chichas","Chuquibamba","Iray","Río Grande","Salamanca","Yanaquihua"],"Islay":["Cocachacra","Dean Valdivia","Islay","Mejia","Mollendo","Punta de Bombón"],"La Uniòn":["Alca","Charcana","Cotahuasi","Huaynacotas","Pampamarca","Puyca","Quechualla","Sayla","Tauria","Tomepampa","Toro"]},"Ayacucho":{"Huamanga":["Acocro","Acos Vinchos","Andrés Avelino Cáceres Dorregaray","Ayacucho","Carmen Alto","Chiara","Jesús Nazareno","Ocros","Pacaycasa","Quinua","San José de Ticllas","San Juan Bautista","Santiago de Pischa","Socos","Tambillo","Vinchos"],"Cangallo":["Cangallo","Chuschi","Los Morochucos","María Parado de Bellido","Paras","Totos"],"Huanca Sancos":["Carapo","Sacsamarca","Sancos","Santiago de Lucanamarca"],"Huanta":["Ayahuanco","Canayre","Chaca","Huamanguilla","Huanta","Iguain","Llochegua","Luricocha","Pucacolpa","Santillana","Sivia","Uchuraccay"],"La Mar":["Anchihuay","Anco","Ayna","Chilcas","Chungui","Luis Carranza","Oronccoy","Samugari","San Miguel","Santa Rosa","Tambo"],"Lucanas":["Aucara","Cabana","Carmen Salcedo","Chaviña","Chipao","Huac-Huas","Laramate","Leoncio Prado","Llauta","Lucanas","Ocaña","Otoca","Puquio","Saisa","San Cristóbal","San Juan","San Pedro","San Pedro de Palco","Sancos","Santa Ana de Huaycahuacho","Santa Lucia"],"Parinacochas":["Chumpi","Coracora","Coronel Castañeda","Pacapausa","Pullo","Puyusca","San Francisco de Ravacayco","Upahuacho"],"Pàucar del Sara Sara":["Colta","Corculla","Lampa","Marcabamba","Oyolo","Pararca","Pausa","San Javier de Alpabamba","San José de Ushua","Sara Sara"],"Sucre":["Belén","Chalcos","Chilcayoc","Huacaña","Morcolla","Paico","Querobamba","San Pedro de Larcay","San Salvador de Quije","Santiago de Paucaray","Soras"],"Víctor Fajardo":["Alcamenca","Apongo","Asquipata","Canaria","Cayara","Colca","Hualla","Huamanquiquia","Huancapi","Huancaraylla","Sarhua","Vilcanchos"],"Vilcas Huamán":["Accomarca","Carhuanca","Concepción","Huambalpa","Independencia","Saurama","Vilcas Huaman","Vischongo"]},"Cajamarca":{"Cajamarca":["Asunción","Cajamarca","Chetilla","Cospan","Encañada","Jesús","Llacanora","Los Baños del Inca","Magdalena","Matara","Namora","San Juan"],"Cajabamba":["Cachachi","Cajabamba","Condebamba","Sitacocha"],"Celendín":["Celendín","Chumuch","Cortegana","Huasmin","Jorge Chávez","José Gálvez","La Libertad de Pallan","Miguel Iglesias","Oxamarca","Sorochuco","Sucre","Utco"],"Chota":["Anguia","Chadin","Chalamarca","Chiguirip","Chimban","Choropampa","Chota","Cochabamba","Conchan","Huambos","Lajas","Llama","Miracosta","Paccha","Pion","Querocoto","San Juan de Licupis","Tacabamba","Tocmoche"],"Contumazá":["Chilete","Contumaza","Cupisnique","Guzmango","San Benito","Santa Cruz de Toledo","Tantarica","Yonan"],"Cutervo":["Callayuc","Choros","Cujillo","Cutervo","La Ramada","Pimpingos","Querocotillo","San Andrés de Cutervo","San Juan de Cutervo","San Luis de Lucma","Santa Cruz","Santo Domingo de la Capilla","Santo Tomas","Socota","Toribio Casanova"],"Hualgayoc":["Bambamarca","Chugur","Hualgayoc"],"Jaén":["Bellavista","Chontali","Colasay","Huabal","Jaén","Las Pirias","Pomahuaca","Pucara","Sallique","San Felipe","San José del Alto","Santa Rosa"],"San Ignacio":["Chirinos","Huarango","La Coipa","Namballe","San Ignacio","San José de Lourdes","Tabaconas"],"San Marcos":["Chancay","Eduardo Villanueva","Gregorio Pita","Ichocan","José Manuel Quiroz","José Sabogal","Pedro Gálvez"],"San Miguel":["Bolívar","Calquis","Catilluc","El Prado","La Florida","Llapa","Nanchoc","Niepos","San Gregorio","San Miguel","San Silvestre de Cochan","Tongod","Unión Agua Blanca"],"San Pablo":["San Bernardino","San Luis","San Pablo","Tumbaden"],"Santa Cruz":["Andabamba","Catache","Chancaybaños","La Esperanza","Ninabamba","Pulan","Santa Cruz","Saucepampa","Sexi","Uticyacu","Yauyucan"]},"Callao":{"Prov. Const. del Callao":["Bellavista","Callao","Carmen de la Legua Reynoso","La Perla","La Punta","Mi Perú","Ventanilla"]},"Cusco":{"Cusco":["Ccorca","Cusco","Poroy","San Jerónimo","San Sebastian","Santiago","Saylla","Wanchaq"],"Acomayo":["Acomayo","Acopia","Acos","Mosoc Llacta","Pomacanchi","Rondocan","Sangarara"],"Anta":["Ancahuasi","Anta","Cachimayo","Chinchaypujio","Huarocondo","Limatambo","Mollepata","Pucyura","Zurite"],"Calca":["Calca","Coya","Lamay","Lares","Pisac","San Salvador","Taray","Yanatile"],"Canas":["Checca","Kunturkanki","Langui","Layo","Pampamarca","Quehue","Tupac Amaru","Yanaoca"],"Canchis":["Checacupe","Combapata","Marangani","Pitumarca","San Pablo","San Pedro","Sicuani","Tinta"],"Chumbivilcas":["Capacmarca","Chamaca","Colquemarca","Livitaca","Llusco","Quiñota","Santo Tomas","Velille"],"Espinar":["Alto Pichigua","Condoroma","Coporaque","Espinar","Ocoruro","Pallpata","Pichigua","Suyckutambo"],"La Convención":["Echarate","Huayopata","Inkawasi","Kimbiri","Maranura","Megantoni","Ocobamba","Pichari","Quellouno","Santa Ana","Santa Teresa","Vilcabamba","Villa Kintiarina","Villa Virgen"],"Paruro":["Accha","Ccapi","Colcha","Huanoquite","Omachaç","Paccaritambo","Paruro","Pillpinto","Yaurisque"],"Paucartambo":["Caicay","Challabamba","Colquepata","Huancarani","Kosñipata","Paucartambo"],"Quispicanchi":["Andahuaylillas","Camanti","Ccarhuayo","Ccatca","Cusipata","Huaro","Lucre","Marcapata","Ocongate","Oropesa","Quiquijana","Urcos"],"Urubamba":["Chinchero","Huayllabamba","Machupicchu","Maras","Ollantaytambo","Urubamba","Yucay"]},"Huancavelica":{"Huancavelica":["Acobambilla","Acoria","Ascensión","Conayca","Cuenca","Huachocolpa","Huancavelica","Huando","Huayllahuara","Izcuchaca","Laria","Manta","Mariscal Cáceres","Moya","Nuevo Occoro","Palca","Pilchaca","Vilca","Yauli"],"Acobamba":["Acobamba","Andabamba","Anta","Caja","Marcas","Paucara","Pomacocha","Rosario"],"Angaraes":["Anchonga","Callanmarca","Ccochaccasa","Chincho","Congalla","Huanca-Huanca","Huayllay Grande","Julcamarca","Lircay","San Antonio de Antaparco","Santo Tomas de Pata","Secclla"],"Castrovirreyna":["Arma","Aurahua","Capillas","Castrovirreyna","Chupamarca","Cocas","Huachos","Huamatambo","Mollepampa","San Juan","Santa Ana","Tantara","Ticrapo"],"Churcampa":["Anco","Chinchihuasi","Churcampa","Cosme","El Carmen","La Merced","Locroja","Pachamarca","Paucarbamba","San Miguel de Mayocc","San Pedro de Coris"],"Huaytará":["Ayavi","Córdova","Huayacundo Arma","Huaytara","Laramarca","Ocoyo","Pilpichaca","Querco","Quito-Arma","San Antonio de Cusicancha","San Francisco de Sangayaico","San Isidro","Santiago de Chocorvos","Santiago de Quirahuara","Santo Domingo de Capillas","Tambo"],"Tayacaja":["Acostambo","Acraquia","Ahuaycha","Andaymarca","Colcabamba","Daniel Hernández","Huachocolpa","Huaribamba","Pampas","Pazos","Pichos","Quichuas","Quishuar","Roble","Salcabamba","Salcahuasi","San Marcos de Rocchac","Santiago de Tucuma","Surcubamba","Tintay Puncu","Ñahuimpuquio"]},"Huánuco":{"Huánuco":["Amarilis","Chinchao","Churubamba","Huanuco","Margos","Pillco Marca","Quisqui (Kichki)","San Francisco de Cayran","San Pablo de Pillao","San Pedro de Chaulan","Santa María del Valle","Yacus","Yarumayo"],"Ambo":["Ambo","Cayna","Colpas","Conchamarca","Huacar","San Francisco","San Rafael","Tomay Kichwa"],"Dos de Mayo":["Chuquis","La Unión","Marías","Pachas","Quivilla","Ripan","Shunqui","Sillapata","Yanas"],"Huacaybamba":["Canchabamba","Cochabamba","Huacaybamba","Pinra"],"Huamalíes":["Arancay","Chavín de Pariarca","Jacas Grande","Jircan","Llata","Miraflores","Monzón","Punchao","Puños","Singa","Tantamayo"],"Leoncio Prado":["Castillo Grande","Daniel Alomía Robles","Hermílio Valdizan","José Crespo y Castillo","Luyando","Mariano Damaso Beraun","Pucayacu","Pueblo Nuevo","Rupa-Rupa","Santo Domingo de Anda"],"Marañón":["Cholon","Huacrachuco","La Morada","San Buenaventura","Santa Rosa de Alto Yanajanca"],"Pachitea":["Chaglla","Molino","Panao","Umari"],"Puerto Inca":["Codo del Pozuzo","Honoria","Puerto Inca","Tournavista","Yuyapichis"],"Lauricocha":["Baños","Jesús","Jivia","Queropalca","Rondos","San Francisco de Asís","San Miguel de Cauri"],"Yarowilca":["Aparicio Pomares","Cahuac","Chacabamba","Chavinillo","Choras","Jacas Chico","Obas","Pampamarca"]},"Ica":{"Ica":["Ica","La Tinguiña","Los Aquijes","Ocucaje","Pachacutec","Parcona","Pueblo Nuevo","Salas","San José de Los Molinos","San Juan Bautista","Santiago","Subtanjalla","Tate","Yauca del Rosario"],"Chincha":["Alto Laran","Chavin","Chincha Alta","Chincha Baja","El Carmen","Grocio Prado","Pueblo Nuevo","San Juan de Yanac","San Pedro de Huacarpana","Sunampe","Tambo de Mora"],"Nasca":["Changuillo","El Ingenio","Marcona","Nasca","Vista Alegre"],"Palpa":["Llipata","Palpa","Río Grande","Santa Cruz","Tibillo"],"Pisco":["Huancano","Humay","Independencia","Paracas","Pisco","San Andrés","San Clemente","Tupac Amaru Inca"]},"Junín":{"Huancayo":["Carhuacallanga","Chacapampa","Chicche","Chilca","Chongos Alto","Chupuro","Colca","Cullhuas","El Tambo","Huacrapuquio","Hualhuas","Huancan","Huancayo","Huasicancha","Huayucachi","Ingenio","Pariahuanca","Pilcomayo","Pucara","Quichuay","Quilcas","San Agustín","San Jerónimo de Tunan","Santo Domingo de Acobamba","Sapallanga","Saño","Sicaya","Viques"],"Concepción":["Aco","Andamarca","Chambara","Cochas","Comas","Concepción","Heroínas Toledo","Manzanares","Mariscal Castilla","Matahuasi","Mito","Nueve de Julio","Orcotuna","San José de Quero","Santa Rosa de Ocopa"],"Chanchamayo":["Chanchamayo","Perene","Pichanaqui","San Luis de Shuaro","San Ramón","Vitoc"],"Jauja":["Acolla","Apata","Ataura","Canchayllo","Curicaca","El Mantaro","Huamali","Huaripampa","Huertas","Janjaillo","Jauja","Julcán","Leonor Ordóñez","Llocllapampa","Marco","Masma","Masma Chicche","Molinos","Monobamba","Muqui","Muquiyauyo","Paca","Paccha","Pancan","Parco","Pomacancha","Ricran","San Lorenzo","San Pedro de Chunan","Sausa","Sincos","Tunan Marca","Yauli","Yauyos"],"Junín":["Carhuamayo","Junin","Ondores","Ulcumayo"],"Satipo":["Coviriali","Llaylla","Mazamari","Pampa Hermosa","Pangoa","Río Negro","Río Tambo","Satipo","Vizcatan del Ene"],"Tarma":["Acobamba","Huaricolca","Huasahuasi","La Unión","Palca","Palcamayo","San Pedro de Cajas","Tapo","Tarma"],"Yauli":["Chacapalpa","Huay-Huay","La Oroya","Marcapomacocha","Morococha","Paccha","Santa Bárbara de Carhuacayan","Santa Rosa de Sacco","Suitucancha","Yauli"],"Chupaca":["Ahuac","Chongos Bajo","Chupaca","Huachac","Huamancaca Chico","San Juan de Iscos","San Juan de Jarpa","Tres de Diciembre","Yanacancha"]},"La Libertad":{"Trujillo":["El Porvenir","Florencia de Mora","Huanchaco","La Esperanza","Laredo","Moche","Poroto","Salaverry","Simbal","Trujillo","Victor Larco Herrera"],"Ascope":["Ascope","Casa Grande","Chicama","Chocope","Magdalena de Cao","Paijan","Rázuri","Santiago de Cao"],"Bolívar":["Bambamarca","Bolívar","Condormarca","Longotea","Uchumarca","Ucuncha"],"Chepén":["Chepen","Pacanga","Pueblo Nuevo"],"Julcán":["Calamarca","Carabamba","Huaso","Julcan"],"Otuzco":["Agallpampa","Charat","Huaranchal","La Cuesta","Mache","Otuzco","Paranday","Salpo","Sinsicap","Usquil"],"Pacasmayo":["Guadalupe","Jequetepeque","Pacasmayo","San José","San Pedro de Lloc"],"Pataz":["Buldibuyo","Chillia","Huancaspata","Huaylillas","Huayo","Ongon","Parcoy","Pataz","Pias","Santiago de Challas","Taurija","Tayabamba","Urpay"],"Sánchez Carrión":["Chugay","Cochorco","Curgos","Huamachuco","Marcabal","Sanagoran","Sarin","Sartimbamba"],"Santiago de Chuco":["Angasmarca","Cachicadan","Mollebamba","Mollepata","Quiruvilca","Santa Cruz de Chuca","Santiago de Chuco","Sitabamba"],"Gran Chimú":["Cascas","Lucma","Marmot","Sayapullo"],"Virú":["Chao","Guadalupito","Viru"]},"Lambayeque":{"Chiclayo":["Cayalti","Chiclayo","Chongoyape","Eten","Eten Puerto","José Leonardo Ortiz","La Victoria","Lagunas","Monsefu","Nueva Arica","Oyotun","Patapo","Picsi","Pimentel","Pomalca","Pucala","Reque","Santa Rosa","Saña","Tuman"],"Ferreñafe":["Cañaris","Ferreñafe","Incahuasi","Manuel Antonio Mesones Muro","Pitipo","Pueblo Nuevo"],"Lambayeque":["Chochope","Illimo","Jayanca","Lambayeque","Mochumi","Morrope","Motupe","Olmos","Pacora","Salas","San José","Tucume"]},"Lima":{"Lima":["Ancón","Ate","Barranco","Breña","Carabayllo","Chaclacayo","Chorrillos","Cieneguilla","Comas","El Agustino","Independencia","Jesús María","La Molina","La Victoria","Lima","Lince","Los Olivos","Lurigancho","Lurin","Magdalena del Mar","Miraflores","Pachacamac","Pucusana","Pueblo Libre","Puente Piedra","Punta Hermosa","Punta Negra","Rímac","San Bartolo","San Borja","San Isidro","San Juan de Lurigancho","San Juan de Miraflores","San Luis","San Martín de Porres","San Miguel","Santa Anita","Santa María del Mar","Santa Rosa","Santiago de Surco","Surquillo","Villa El Salvador","Villa María del Triunfo"],"Barranca":["Barranca","Paramonga","Pativilca","Supe","Supe Puerto"],"Cajatambo":["Cajatambo","Copa","Gorgor","Huancapon","Manas"],"Canta":["Arahuay","Canta","Huamantanga","Huaros","Lachaqui","San Buenaventura","Santa Rosa de Quives"],"Cañete":["Asia","Calango","Cerro Azul","Chilca","Coayllo","Imperial","Lunahuana","Mala","Nuevo Imperial","Pacaran","Quilmana","San Antonio","San Luis","San Vicente de Cañete","Santa Cruz de Flores","Zúñiga"],"Huaral":["Atavillos Alto","Atavillos Bajo","Aucallama","Chancay","Huaral","Ihuari","Lampian","Pacaraos","San Miguel de Acos","Santa Cruz de Andamarca","Sumbilca","Veintisiete de Noviembre"],"Huarochirí":["Antioquia","Callahuanca","Carampoma","Chicla","Cuenca","Huachupampa","Huanza","Huarochiri","Lahuaytambo","Langa","Laraos","Mariatana","Matucana","Ricardo Palma","San Andrés de Tupicocha","San Antonio","San Bartolomé","San Damian","San Juan de Iris","San Juan de Tantaranche","San Lorenzo de Quinti","San Mateo","San Mateo de Otao","San Pedro de Casta","San Pedro de Huancayre","Sangallaya","Santa Cruz de Cocachacra","Santa Eulalia","Santiago de Anchucaya","Santiago de Tuna","Santo Domingo de Los Olleros","Surco"],"Huaura":["Ambar","Caleta de Carquin","Checras","Huacho","Hualmay","Huaura","Leoncio Prado","Paccho","Santa Leonor","Santa María","Sayan","Vegueta"],"Oyón":["Andajes","Caujul","Cochamarca","Navan","Oyon","Pachangara"],"Yauyos":["Alis","Allauca","Ayaviri","Azángaro","Cacra","Carania","Catahuasi","Chocos","Cochas","Colonia","Hongos","Huampara","Huancaya","Huangascar","Huantan","Huañec","Laraos","Lincha","Madean","Miraflores","Omas","Putinza","Quinches","Quinocay","San Joaquín","San Pedro de Pilas","Tanta","Tauripampa","Tomas","Tupe","Vitis","Viñac","Yauyos"]},"Loreto":{"Maynas":["Alto Nanay","Belén","Fernando Lores","Indiana","Iquitos","Las Amazonas","Mazan","Napo","Punchana","San Juan Bautista","Torres Causana"],"Alto Amazonas":["Balsapuerto","Jeberos","Lagunas","Santa Cruz","Teniente Cesar López Rojas","Yurimaguas"],"Loreto":["Nauta","Parinari","Tigre","Trompeteros","Urarinas"],"Mariscal Ramón Castilla":["Pebas","Ramón Castilla","San Pablo","Yavari"],"Requena":["Alto Tapiche","Capelo","Emilio San Martín","Jenaro Herrera","Maquia","Puinahua","Requena","Saquena","Soplin","Tapiche","Yaquerana"],"Ucayali":["Contamana","Inahuaya","Padre Márquez","Pampa Hermosa","Sarayacu","Vargas Guerra"],"Datem del Marañón":["Andoas","Barranca","Cahuapanas","Manseriche","Morona","Pastaza"],"Putumayo":["Putumayo","Rosa Panduro","Teniente Manuel Clavero","Yaguas"]},"Madre de Dios":{"Tambopata":["Inambari","Laberinto","Las Piedras","Tambopata"],"Manu":["Fitzcarrald","Huepetuhe","Madre de Dios","Manu"],"Tahuamanu":["Iberia","Iñapari","Tahuamanu"]},"Moquegua":{"Mariscal Nieto":["Carumas","Cuchumbaya","Moquegua","Samegua","San Cristóbal","Torata"],"General Sánchez Cerro":["Chojata","Coalaque","Ichuña","La Capilla","Lloque","Matalaque","Omate","Puquina","Quinistaquillas","Ubinas","Yunga"],"Ilo":["El Algarrobal","Ilo","Pacocha"]},"Pasco":{"Pasco":["Chaupimarca","Huachon","Huariaca","Huayllay","Ninacaca","Pallanchacra","Paucartambo","San Francisco de Asís de Yarusyacan","Simon Bolívar","Ticlacayan","Tinyahuarco","Vicco","Yanacancha"],"Daniel Alcides Carrión":["Chacayan","Goyllarisquizga","Paucar","San Pedro de Pillao","Santa Ana de Tusi","Tapuc","Vilcabamba","Yanahuanca"],"Oxapampa":["Chontabamba","Constitución","Huancabamba","Oxapampa","Palcazu","Pozuzo","Puerto Bermúdez","Villa Rica"]},"Piura":{"Piura":["Castilla","Catacaos","Cura Mori","El Tallan","La Arena","La Unión","Las Lomas","Piura","Tambo Grande","Veintiseis de Octubre"],"Ayabaca":["Ayabaca","Frias","Jilili","Lagunas","Montero","Pacaipampa","Paimas","Sapillica","Sicchez","Suyo"],"Huancabamba":["Canchaque","El Carmen de la Frontera","Huancabamba","Huarmaca","Lalaquiz","San Miguel de El Faique","Sondor","Sondorillo"],"Morropón":["Buenos Aires","Chalaco","Chulucanas","La Matanza","Morropon","Salitral","San Juan de Bigote","Santa Catalina de Mossa","Santo Domingo","Yamango"],"Paita":["Amotape","Arenal","Colan","La Huaca","Paita","Tamarindo","Vichayal"],"Sullana":["Bellavista","Ignacio Escudero","Lancones","Marcavelica","Miguel Checa","Querecotillo","Salitral","Sullana"],"Talara":["El Alto","La Brea","Lobitos","Los Organos","Mancora","Pariñas"],"Sechura":["Bellavista de la Unión","Bernal","Cristo Nos Valga","Rinconada Llicuar","Sechura","Vice"]},"Puno":{"Puno":["Acora","Amantani","Atuncolla","Capachica","Chucuito","Coata","Huata","Mañazo","Paucarcolla","Pichacani","Plateria","Puno","San Antonio","Tiquillaca","Vilque"],"Azángaro":["Achaya","Arapa","Asillo","Azángaro","Caminaca","Chupa","José Domingo Choquehuanca","Muñani","Potoni","Saman","San Anton","San José","San Juan de Salinas","Santiago de Pupuja","Tirapata"],"Carabaya":["Ajoyani","Ayapata","Coasa","Corani","Crucero","Ituata","Macusani","Ollachea","San Gaban","Usicayos"],"Chucuito":["Desaguadero","Huacullani","Juli","Kelluyo","Pisacoma","Pomata","Zepita"],"El Collao":["Capazo","Conduriri","Ilave","Pilcuyo","Santa Rosa"],"Huancané":["Cojata","Huancane","Huatasani","Inchupalla","Pusi","Rosaspata","Taraco","Vilque Chico"],"Lampa":["Cabanilla","Calapuja","Lampa","Nicasio","Ocuviri","Palca","Paratia","Pucara","Santa Lucia","Vilavila"],"Melgar":["Antauta","Ayaviri","Cupi","Llalli","Macari","Nuñoa","Orurillo","Santa Rosa","Umachiri"],"Moho":["Conima","Huayrapata","Moho","Tilali"],"San Antonio de Putina":["Ananea","Pedro Vilca Apaza","Putina","Quilcapuncu","Sina"],"San Román":["Cabana","Cabanillas","Caracoto","Juliaca","San Miguel"],"Sandia":["Alto Inambari","Cuyocuyo","Limbani","Patambuco","Phara","Quiaca","San Juan del Oro","San Pedro de Putina Punco","Sandia","Yanahuaya"],"Yunguyo":["Anapia","Copani","Cuturapi","Ollaraya","Tinicachi","Unicachi","Yunguyo"]},"San Martín":{"Moyobamba":["Calzada","Habana","Jepelacio","Moyobamba","Soritor","Yantalo"],"Bellavista":["Alto Biavo","Bajo Biavo","Bellavista","Huallaga","San Pablo","San Rafael"],"El Dorado":["Agua Blanca","San José de Sisa","San Martín","Santa Rosa","Shatoja"],"Huallaga":["Alto Saposoa","El Eslabón","Piscoyacu","Sacanche","Saposoa","Tingo de Saposoa"],"Lamas":["Alonso de Alvarado","Barranquita","Caynarachi","Cuñumbuqui","Lamas","Pinto Recodo","Rumisapa","San Roque de Cumbaza","Shanao","Tabalosos","Zapatero"],"Mariscal Cáceres":["Campanilla","Huicungo","Juanjuí","Pachiza","Pajarillo"],"Picota":["Buenos Aires","Caspisapa","Picota","Pilluana","Pucacaca","San Cristóbal","San Hilarión","Shamboyacu","Tingo de Ponasa","Tres Unidos"],"Rioja":["Awajun","Elías Soplin Vargas","Nueva Cajamarca","Pardo Miguel","Posic","Rioja","San Fernando","Yorongos","Yuracyacu"],"San Martín":["Alberto Leveau","Cacatachi","Chazuta","Chipurana","El Porvenir","Huimbayoc","Juan Guerra","La Banda de Shilcayo","Morales","Papaplaya","San Antonio","Sauce","Shapaja","Tarapoto"],"Tocache":["Nuevo Progreso","Polvora","Shunte","Tocache","Uchiza"]},"Tacna":{"Tacna":["Alto de la Alianza","Calana","Ciudad Nueva","Coronel Gregorio Albarracín Lanchipa","Inclan","La Yarada los Palos","Pachia","Palca","Pocollay","Sama","Tacna"],"Candarave":["Cairani","Camilaca","Candarave","Curibaya","Huanuara","Quilahuani"],"Jorge Basadre":["Ilabaya","Ite","Locumba"],"Tarata":["Estique","Estique-Pampa","Héroes Albarracín","Sitajara","Susapaya","Tarata","Tarucachi","Ticaco"]},"Tumbes":{"Tumbes":["Corrales","La Cruz","Pampas de Hospital","San Jacinto","San Juan de la Virgen","Tumbes"],"Contralmirante Villar":["Canoas de Punta Sal","Casitas","Zorritos"],"Zarumilla":["Aguas Verdes","Matapalo","Papayal","Zarumilla"]},"Ucayali":{"Coronel Portillo":["Calleria","Campoverde","Iparia","Manantay","Masisea","Nueva Requena","Yarinacocha"],"Atalaya":["Raymondi","Sepahua","Tahuania","Yurua"],"Padre Abad":["Alexander Von Humboldt","Curimana","Irazola","Neshuya","Padre Abad"],"Purús":["Purus"]}};
+const STEPS=['Carrito','Entrega','Pago'],LK=['carrito','entrega'];
+const stepper=n=>`<ol class="stp" aria-label="Pasos de la compra">${STEPS.map((s,i)=>{const k=i+1,inn=`<span class="c">${k<n?'✓':k}</span>${s}`;return `<li class="${k<n?'done':k==n?'on':''}"${k==n?' aria-current="step"':''}>${k<n?`<a href="#/${LK[i]}">${inn}</a>`:inn}</li>`}).join('')}</ol>`;
+function tot(){const ids=Object.keys(cart).filter(i=>P.some(p=>p.id==i)),total=ids.reduce((a,i)=>a+cart[i]*P.find(p=>p.id==i).price,0);return{ids,total,disc:total*PCT,fin:total*(1-PCT)}}
+const CONT='<a class="btn" href="#/entrega" style="display:block;text-align:center;margin-top:14px">Continuar a entrega</a>';
+const HORAS=['9:00 a 12:00','12:00 a 15:00','15:00 a 18:00','18:00 a 21:00'];
+const sumHTML=(T,x='')=>{const d=promo.done?T.disc:0;return `<div class="sum"><h2>Resumen de la orden</h2>${T.ids.map(i=>{const p=P.find(y=>y.id==i);return `<div class="row"><span>${p.name} × ${cart[i]}</span><span>${fm(p.price*cart[i])}</span></div>`}).join('')}
+<div class="promo" style="margin:10px 0"><input id="pcs" readonly value="${promo.done?CODE:''}" placeholder="Cupón de descuento" aria-label="Cupón de descuento"><span class="${promo.done?'ok':''}">${promo.done?'Aplicado':'Aplicando…'}</span></div>
+${promo.done?`<div class="row" style="color:#1c7a45"><span>Descuento ${CODE} (−${CONFIG.promoPercent}%)</span><span>−${fm(d)}</span></div>`:''}<div class="row"><span>Envío</span><span>Incluido</span></div><div class="row gt"><span>Total</span><span>${fm(T.total-d)}</span></div>${x}</div>`};
+const empty=()=>{$('#app').innerHTML='<div class="terms wrap"><h1>Tu carrito está vacío</h1><p>Elige un producto para continuar con tu compra.</p><p style="margin-top:20px"><a class="btn o" href="#/">Ir a la tienda</a></p></div>'};
+const okPromo=()=>{clearInterval(promo.iv);promo.t=CODE;promo.done=true;promo.run=false};
+function typeSum(){if(promo.done||!$('#pcs'))return;let i=0;clearInterval(promo.iv);promo.iv=setInterval(()=>{const e=$('#pcs');if(!e||location.hash!='#/carrito'){clearInterval(promo.iv);return}i++;e.value=CODE.slice(0,i);if(i>=CODE.length){clearInterval(promo.iv);promo.t=CODE;promo.done=true;promo.run=false;const s=$('#app .sum');if(s)s.outerHTML=sumHTML(tot(),CONT)}},170)}
+function cartPage(){
+  const T=tot();if(!T.ids.length)return empty();track('carrito_ver');
+  const cats=new Set(T.ids.map(i=>P.find(p=>p.id==i).cat)),rel=P.filter(p=>!cart[p.id]).sort((a,b)=>cats.has(b.cat)-cats.has(a.cat)).slice(0,3);
+  $('#app').innerHTML=`<div class="wrap">${stepper(1)}<div class="co"><div><h1>Tu carrito</h1>${T.ids.map(i=>{const p=P.find(x=>x.id==i);return `<div class="it">${ph(p)}<div><b style="font-weight:500">${p.name}</b><br><small>${fm(p.price)}</small><br><button class="rm" data-rm="${i}">Quitar</button></div><div class="qty"><button data-d="-1" data-i="${i}" aria-label="Menos">−</button><span>${cart[i]}</span><button data-d="1" data-i="${i}" aria-label="Más">+</button></div></div>`}).join('')}
+  ${rel.length?`<h3 class="rt">También te puede gustar</h3>${rel.map(p=>`<div class="rl">${ph(p)}<div><b style="font-weight:500">${p.name}</b><br><small>${fm(p.price)}</small></div><button class="btn o sm" data-ra="${p.id}">Añadir</button></div>`).join('')}`:''}</div>
+  ${sumHTML(T,CONT)}</div></div>`;
+  document.querySelectorAll('#app [data-rm]').forEach(b=>b.onclick=()=>{delete cart[b.dataset.rm];save();cartPage()});
+  document.querySelectorAll('#app [data-d]').forEach(b=>b.onclick=()=>{const i=b.dataset.i;cart[i]+=+b.dataset.d;if(cart[i]<1)delete cart[i];save();cartPage()});
+  document.querySelectorAll('#app [data-ra]').forEach(b=>b.onclick=()=>{cart[b.dataset.ra]=1;track('agregar_relacionado',b.dataset.ra);save();cartPage()});
+  if(!promo.done){clearInterval(promo.iv);setTimeout(typeSum,600)}
+}
+function deliveryPage(){
+  const T=tot();if(!T.ids.length)return empty();track('entrega_inicio');okPromo();map=mk=null;
+  const LB=(n,l,x='')=>`<label>${l}<input name="${n}" required minlength="2" maxlength="40" placeholder=" " ${x}></label>`;
+  $('#app').innerHTML=`<div class="wrap">${stepper(2)}<div class="co"><form id="df"><h1>Entrega</h1>
+  <h2>1. Tus datos</h2><div class="fg2">${LB('nombre','Nombre','autocomplete="given-name"')}${LB('paterno','Apellido paterno')}${LB('materno','Apellido materno')}
+  <label>Celular<div class="p51"><span>+51</span><input name="celular" required inputmode="numeric" maxlength="9" placeholder="9XXXXXXXX" pattern="9[0-9]{8}" autocomplete="tel-national"></div></label>
+  <label>DNI<input name="dni" required inputmode="numeric" maxlength="8" placeholder="8 dígitos" pattern="[0-9]{8}"></label></div>
+  <h2>2. Dirección de envío</h2><div class="fg2"><label>Departamento<select name="departamento" required><option value="">Selecciona</option>${Object.keys(UBI).map(d=>`<option>${d}</option>`).join('')}</select></label>
+  <label>Provincia<select name="provincia" required disabled><option value="">Selecciona</option></select></label>
+  <label>Distrito<select name="distrito" required disabled><option value="">Selecciona</option></select></label></div>
+  <label class="full">Dirección<input name="direccion" required maxlength="100" placeholder="Calle o avenida y número"></label>
+  <label class="full">Depto, casa, piso, interior (opcional)<input name="complemento" maxlength="60"></label>
+  <h2>3. ¿Cómo quieres recibir tu pedido?</h2><div class="tp"><label class="tc"><input type="radio" name="tipo" value="agencia" required><span><b>Recojo en agencia courier</b><small>Shalom, Olva Courier u otra. Sin costo adicional</small></span></label><label class="tc off" id="tcm"><input type="radio" name="tipo" value="moto" disabled><span><b>Envío por motorizado</b><small id="tcn">Solo Lima Metropolitana. Sin costo adicional</small></span></label></div>
+  <div id="bag" hidden><div class="fg2" style="grid-template-columns:1fr 1fr"><label>Agencia<select name="agencia"><option value="">Selecciona</option><option>Shalom</option><option>Olva Courier</option><option value="Otro">Otro</option></select></label><label id="sgo" hidden>¿Cuál agencia?<input name="agencia_otro" maxlength="40" placeholder="Escribe el nombre"></label></div>
+  <label class="full">Referencia: nombre de la sede de la agencia<input name="sede" maxlength="100" placeholder="Ej. Shalom - Av. Arequipa 1234, Lince"></label></div>
+  <div id="bmo" hidden><label class="full">Referencia<input name="referencia" maxlength="120" placeholder="Ej. frente al parque, casa de reja negra"></label>
+  <label class="full">Rango de horas del envío<select name="horario"><option value="">Selecciona</option>${HORAS.map(h=>`<option>${h}</option>`).join('')}</select></label>
+  <p class="note" style="margin:0 0 8px">Marca tu ubicación exacta: toca el mapa o arrastra el marcador.</p><div id="map"></div><div class="mpb"><button type="button" class="btn o sm" id="gps">Usar mi ubicación</button><span class="note" id="mpn"></span></div><input type="hidden" name="lat"><input type="hidden" name="lng"></div>
+  <label class="full">Mensaje (opcional)<textarea name="mensaje" rows="3" maxlength="300"></textarea></label>
+  <button class="btn" id="nx">Continuar al pago</button></form>${sumHTML(T)}</div></div>`;
+  const f=$('#df'),g=n=>f.elements[n];
+  const fill=(el,arr)=>{el.innerHTML='<option value="">Selecciona</option>'+arr.map(x=>`<option>${x}</option>`).join('');el.disabled=!arr.length};
+  const metro=()=>{const d=g('departamento').value,p=g('provincia').value;return (d=='Lima'&&p=='Lima')||(d=='Callao'&&p.includes('Callao'))};
+  const setPos=(ll,z)=>{if(!mk)return;mk.setLatLng(ll);g('lat').value=(+ll.lat).toFixed(6);g('lng').value=(+ll.lng).toFixed(6);$('#mpn').textContent='Ubicación marcada. Puedes ajustarla arrastrando el marcador.';if(z)map.setView(ll,z)};
+  function initMap(){
+    if(map){setTimeout(()=>map.invalidateSize(),60);return}
+    const go=err=>{if(err||!window.L){$('#mpn').textContent='No se pudo cargar el mapa. Escribe bien tu dirección y referencia.';return}
+      const has=g('lat').value,c=has?[+g('lat').value,+g('lng').value]:[-12.0464,-77.0428];
+      map=L.map('map').setView(c,has?17:12);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+      mk=L.marker(c,{draggable:true,icon:L.divIcon({className:'pin',html:'<i></i>',iconSize:[28,28],iconAnchor:[14,28]})}).addTo(map);
+      mk.on('dragend',()=>setPos(mk.getLatLng()));map.on('click',e=>setPos(e.latlng))};
+    if(window.L)go();else{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';s.onload=()=>go();s.onerror=()=>go(1);document.head.appendChild(s)}
+  }
+  function tipo(){const v=(f.querySelector('[name=tipo]:checked')||{}).value;$('#bag').hidden=v!='agencia';$('#bmo').hidden=v!='moto';[['agencia','agencia'],['sede','agencia'],['referencia','moto'],['horario','moto']].forEach(([n,k])=>g(n).required=v==k);const o=v=='agencia'&&g('agencia').value=='Otro';$('#sgo').hidden=!o;g('agencia_otro').required=o;if(v=='moto')initMap()}
+  function elig(){const m=metro(),r=f.querySelector('[name=tipo][value=moto]');r.disabled=!m;$('#tcm').classList.toggle('off',!m);$('#tcn').textContent=m?'Entrega en tu dirección. Sin costo adicional':'Solo Lima Metropolitana. Sin costo adicional';if(!m&&r.checked){r.checked=false;tipo()}}
+  g('departamento').onchange=e=>{fill(g('provincia'),Object.keys(UBI[e.target.value]||{}));fill(g('distrito'),[]);elig()};
+  g('provincia').onchange=e=>{fill(g('distrito'),(UBI[g('departamento').value]||{})[e.target.value]||[]);elig()};
+  f.querySelectorAll('[name=tipo]').forEach(r=>r.onchange=tipo);g('agencia').onchange=tipo;
+  $('#gps').onclick=()=>{if(!navigator.geolocation){$('#mpn').textContent='Tu equipo no permite ubicarte. Toca el mapa para marcarla.';return}navigator.geolocation.getCurrentPosition(p=>setPos({lat:p.coords.latitude,lng:p.coords.longitude},17),()=>{$('#mpn').textContent='No pudimos obtener tu ubicación. Toca el mapa para marcarla.'})};
+  const dg=(n,re,m)=>g(n).addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,n=='dni'?8:9);e.target.setCustomValidity(re.test(e.target.value)?'':m)});
+  dg('celular',/^9\d{8}$/,'Ingresa 9 dígitos empezando con 9');dg('dni',/^\d{8}$/,'El DNI tiene 8 dígitos');
+  ['nombre','paterno','materno'].forEach(n=>g(n).addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]/g,'')}));
+  if(ord){const set=(n,v)=>{if(v!=null)g(n).value=v};['nombre','paterno','materno','celular','dni'].forEach(n=>set(n,ord[n]));
+    set('departamento',ord.departamento);g('departamento').dispatchEvent(new Event('change'));set('provincia',ord.provincia);g('provincia').dispatchEvent(new Event('change'));set('distrito',ord.distrito);
+    const r=f.querySelector(`[name=tipo][value=${ord.tipo}]`);if(r&&!r.disabled)r.checked=true;['direccion','complemento','agencia','agencia_otro','sede','referencia','horario','lat','lng','mensaje'].forEach(n=>set(n,ord[n]));tipo()}
+  f.onsubmit=e=>{e.preventDefault();const v=(f.querySelector('[name=tipo]:checked')||{}).value;if(v=='moto'&&!g('lat').value){$('#mpn').textContent='Marca tu ubicación exacta en el mapa para continuar.';$('#map').scrollIntoView({block:'center'});return}ord=Object.fromEntries(new FormData(f));location.hash='#/pago'};
+}
+function payPage(){
+  const T=tot();if(!T.ids.length)return empty();if(!ord){location.hash='#/entrega';return}
+  track('pago_inicio');okPromo();const o=ord;
+  const dir=esc(o.direccion)+(o.complemento?', '+esc(o.complemento):''),ent=o.tipo=='moto'?`Motorizado, de ${esc(o.horario)}. Ref.: ${esc(o.referencia)}`:`Recojo en agencia ${esc(o.agencia=='Otro'?o.agencia_otro:o.agencia)}, sede: ${esc(o.sede)}`;
+  $('#app').innerHTML=`<div class="wrap">${stepper(3)}<div class="co"><form id="pf"><h1>Pago</h1>
+  <div class="bc"><div style="display:flex;justify-content:space-between;gap:12px"><b style="font-weight:500">Entrega</b><a href="#/entrega" style="text-decoration:underline;font-size:13px">Editar</a></div><p style="margin:6px 0 0;text-transform:none;font-size:14px;color:var(--ink)">${esc(o.nombre)} ${esc(o.paterno)} ${esc(o.materno)} · +51 ${esc(o.celular)}<br>${dir}, ${esc(o.distrito)}, ${esc(o.provincia)}, ${esc(o.departamento)}<br>${ent}</p></div>
+  <h2>Forma de pago</h2><div class="pys"><button class="pay mp" name="pago" value="mp"><b>Pagar con Mercado Pago</b><small>Tarjeta u otros medios</small></button><button class="pay cod" name="pago" value="cod"><b>Pago contraentrega</b><small>Pagas al recibir, sin cargos adicionales</small></button></div>
+  <label class="ck"><input type="checkbox" name="terminos" required> Acepto los <a href="#/terminos" target="_blank">términos y condiciones</a> y el uso de mis datos para gestionar mi pedido.</label><p class="note" id="cn" role="status"></p></form>${sumHTML(T)}</div></div>`;
+  $('#pf').onsubmit=payMP;
+}
+async function payMP(e){
+  e.preventDefault();const m=(e.submitter&&e.submitter.value)||'mp',cn=$('#cn'),o=ord,x=k=>(o[k]||'').trim(),moto=o.tipo=='moto';
+  const items=Object.keys(cart).filter(i=>P.some(p=>p.id==i)).map(i=>{const p=P.find(y=>y.id==i);return{id:i,title:p.name,quantity:cart[i],unit_price:p.price}});
+  const fin=items.reduce((a,y)=>a+y.quantity*y.unit_price,0)*(1-PCT),ag=o.agencia=='Otro'?x('agencia_otro'):x('agencia');
+  const c={nombre:x('nombre'),paterno:x('paterno'),materno:x('materno'),celular:'+51'+x('celular'),dni:x('dni'),departamento:x('departamento'),provincia:x('provincia'),distrito:x('distrito'),direccion:x('direccion'),complemento:x('complemento'),tipo_envio:moto?'motorizado':'recojo_agencia',agencia:moto?'':ag,sede:moto?'':x('sede'),referencia:moto?x('referencia'):'',horario:moto?x('horario'):'',lat:moto?x('lat'):'',lng:moto?x('lng'):'',mensaje:x('mensaje')};
+  track('pedido_'+m,moto?'motorizado':ag);
+  if(m=='cod'){
+    const msg=['NUEVO PEDIDO - PAGO CONTRAENTREGA','Cliente: '+[c.nombre,c.paterno,c.materno].join(' '),'DNI: '+c.dni,'Celular: '+c.celular,'Ubicación: '+[c.distrito,c.provincia,c.departamento].join(', '),'Dirección: '+c.direccion+(c.complemento?' ('+c.complemento+')':''),'Tipo de entrega: '+(moto?'Motorizado':'Recojo en agencia'),...(moto?['Rango de horas: '+c.horario,'Referencia: '+c.referencia,'Mapa: https://www.google.com/maps?q='+c.lat+','+c.lng]:['Agencia: '+c.agencia,'Sede de la agencia: '+c.sede]),'Productos:',...items.map(y=>`- ${y.title} x${y.quantity}`),'Total a pagar: '+fm(fin)+' (código '+CODE+' aplicado, envío incluido)',c.mensaje?'Mensaje: '+c.mensaje:''].filter(Boolean).join('\n');
+    const url=`https://wa.me/${CONFIG.whatsapp}?text=`+encodeURIComponent(msg);
+    window.open(url,'_blank');ord=null;cart={};save();
+    $('#app').innerHTML=`<div class="terms wrap"><h1>¡Gracias, ${esc(c.nombre)}!</h1><p>Tu pedido está listo para enviarse. Se abrió WhatsApp con el detalle: solo pulsa enviar. Pagarás al recibir tu pedido, sin cargos adicionales.</p><div class="acts"><a class="btn o" href="${url}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a><a class="btn o" href="#/">Volver a la tienda</a></div></div>`;
+    return}
+  if(!CONFIG.checkoutEndpoint){cn.textContent='Datos validados. La pasarela de Mercado Pago aún no está conectada: falta indicar checkoutEndpoint en CONFIG.';return}
+  const bs=document.querySelectorAll('.pay');bs.forEach(b=>b.disabled=true);cn.textContent='Conectando con Mercado Pago…';
+  try{const r=await fetch(CONFIG.checkoutEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payment:'mercadopago',items,customer:c,coupon:{code:CODE,percent:CONFIG.promoPercent}})});const d=await r.json();if(!d.init_point)throw 0;location.href=d.init_point}
+  catch(z){cn.textContent='No pudimos iniciar el pago. Inténtalo nuevamente en unos minutos.';bs.forEach(b=>b.disabled=false)}
+}
+function openCart(){$('#dr').classList.add('on');$('#ov').classList.add('on');renderCart();$('#dr').setAttribute('aria-hidden','false')}
+function closeCart(){$('#dr').classList.remove('on');$('#ov').classList.remove('on');$('#dr').setAttribute('aria-hidden','true')}
+/* ===== inicio ===== */
+function route(){closeCart();{const a=$('#app');a.classList.remove('pg');void a.offsetWidth;a.classList.add('pg');clearTimeout(window._pg);window._pg=setTimeout(()=>a.classList.remove('pg'),1900)}document.body.classList.toggle('prod',location.hash.startsWith('#/producto'));const h=location.hash.split('/');window.scrollTo(0,0);track('vista',location.hash||'#/');
+  if(h[1]=='producto')product(h[2]);else if(h[1]=='terminos')terms();else if(h[1]=='ayuda')help();else if(h[1]=='carrito')cartPage();else if(h[1]=='entrega')deliveryPage();else if(h[1]=='pago')payPage();else home()}
+let last='';window.addEventListener('hashchange',()=>{if(location.hash!=last)thumb=0;last=location.hash;route()});
+$('#q').oninput=e=>{filt.q=e.target.value;if(location.hash&&location.hash!='#/'){location.hash='#/'}else home()};
+$('#nof').onclick=()=>{filt.cat='Ofertas';filt.q='';$('#q').value='';if(location.hash==''||location.hash=='#/')home()};$('#nch').href=$('#fch').href=CONFIG.channelUrl;$('#nch').onclick=$('#fch').onclick=()=>track('canal_clic');$('#q').onchange=e=>e.target.value&&track('busqueda',e.target.value);if(innerWidth<760)$('#q').placeholder='Buscar';$('#cb').onclick=openCart;$('#ov').onclick=closeCart;document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeCart();minAnn();$('#ch').classList.remove('on')}});
+$('#soc').innerHTML=Object.entries(CONFIG.social).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('');
+/* ===== frases, anuncio y chat ===== */
+{const g=[...CONFIG.phrases,...CONFIG.phrases].map(x=>`<span>${esc(x)}</span>`).join('');$('#mqi').innerHTML=`<div class="g">${g}</div><div class="g" aria-hidden="true">${g}</div>`}
+const an=$('#an'),ab=$('#ab');
+an.innerHTML=`<button class="ax" aria-label="Cerrar anuncio">×</button><h2>Novedades</h2>${CONFIG.announcements.map(a=>`<div class="ai"><h3>${esc(a.title)}</h3><p>${esc(a.text)}</p>${a.link?`<a class="btn o sm" href="${a.link}">${esc(a.cta||'Ver más')}</a>`:''}</div>`).join('')}`;
+$('#an_n').textContent=CONFIG.announcements.length;
+function bg(b){document.body.classList.toggle('noscroll',b);document.querySelectorAll('header,main,footer,#wa,#ab').forEach(e=>e.inert=b)}
+function minAnn(){if(!CONFIG.announcements.length)return;an.classList.add('min');ab.classList.add('on');$('#aov').classList.remove('on');bg(false)}
+function openAnn(){an.classList.remove('min');ab.classList.remove('on');$('#aov').classList.add('on');bg(true);track('anuncio_reabrir')}
+an.querySelector('.ax').onclick=minAnn;an.querySelectorAll('a').forEach(a=>a.onclick=()=>{track('anuncio_clic',a.textContent);minAnn()});$('#aov').onclick=minAnn;
+ab.onclick=openAnn;
+if(CONFIG.announcements.length)bg(true);else{an.classList.add('min');$('#aov').classList.remove('on')}
+const chatLog=[],greet='Hola, soy el asistente de Cyber Shopp. Te ayudo con productos, envíos y pagos. ¿Qué necesitas?';let busy=false;
+const FAQ=[[/env[ií]o|entrega|demora|llega/,'Enviamos a todo el Perú y el costo de envío ya está incluido en el precio. El plazo depende de tu ubicación.'],[/pago|tarjeta|yape|mercado/,'Pagas de forma segura con Mercado Pago.'],[/devol|cambio|garant/,'Aceptas cambios y devoluciones dentro de 7 días con el producto sin uso. Cada producto indica su garantía.'],[/descuento|cup[oó]n|promo|c[oó]digo/,'Al abrir tu carrito se aplica automáticamente un código de descuento.']];
+function drawChat(){$('#cm').innerHTML=[{r:'b',t:greet},...chatLog].map(m=>`<div class="b ${m.r}">${esc(m.t)}</div>`).join('')+(busy?'<div class="b">Escribiendo…</div>':'');$('#cm').scrollTop=1e5}
+function human(){track('chat_asesor');const last=chatLog.filter(m=>m.r=='u').slice(-3).map(m=>m.t).join(' / ');window.open(`https://wa.me/${CONFIG.whatsapp}?text=`+encodeURIComponent('Hola Cyber Shopp, te escribo desde la web.'+(last?' Mi consulta: '+last:'')),'_blank')}
+async function ask(){
+  const q=chatLog[chatLog.length-1].t;
+  try{const s=window.claude&&await claude.use('sample');
+    if(s){const ctx=P.map(p=>`- ${p.name} (${p.cat}), ${fm(p.price)}: ${p.short}`).join('\n'),h=chatLog.slice(-8).map(m=>(m.r=='u'?'Cliente: ':'Asistente: ')+m.t).join('\n');
+      const r=await s(`Eres el asistente de la tienda online Cyber Shopp (Perú). Responde en español, con un máximo de 3 frases, tono amable y sofisticado. Catálogo:\n${ctx}\nEnvíos a todo el Perú; el costo de envío ya está incluido en los precios. Pagos con Mercado Pago. Cambios y devoluciones dentro de 7 días. El carrito aplica automáticamente un código de descuento. No inventes datos que no estén aquí. Si el cliente quiere comprar con ayuda, hacer un reclamo o hablar con una persona, indícale que pulse el botón "Hablar con una persona".\n\nConversación:\n${h}\nAsistente:`,{cache:false,modelTier:'quick'});
+      if(r&&r.text)return r.text.trim()}}catch(e){}
+  const f=FAQ.find(x=>x[0].test(q.toLowerCase()));
+  return f?f[1]:'Gracias por escribirnos. Para ayudarte mejor, pulsa "Hablar con una persona" y te atendemos por WhatsApp.'
+}
+async function send(txt){if(!txt.trim()||busy)return;chatLog.push({r:'u',t:txt.trim()});busy=true;drawChat();const a=await ask();busy=false;chatLog.push({r:'b',t:a});drawChat()}
+$('#cq').innerHTML=['Envíos','Medios de pago','Devoluciones'].map(x=>`<button data-q="${x}">${x}</button>`).join('')+'<button class="hu">Hablar con una persona</button>';
+document.querySelectorAll('#cq [data-q]').forEach(b=>b.onclick=()=>send('Consulta sobre: '+b.dataset.q));
+$('#cq .hu').onclick=human;
+$('#cf').onsubmit=e=>{e.preventDefault();const v=$('#ci').value;$('#ci').value='';send(v)};
+$('#wa').onclick=()=>{const o=$('#ch').classList.toggle('on');$('#wa').setAttribute('aria-expanded',o);if(o){drawChat();track('chat_abrir')}};
+$('#cx').onclick=()=>{$('#ch').classList.remove('on');$('#wa').setAttribute('aria-expanded','false')};
+/* ===== efectos de scroll y mouse ===== */
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;let io,par=[];
+const io_cb=es=>es.forEach(e=>e.target.classList.toggle('in',e.isIntersecting));
+function bindFx(){
+  if(io)io.disconnect();io=new IntersectionObserver(io_cb,{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  const sel='#app .card,#app .gal,#app .pd>div:last-child,#app .rev>div,#app .terms h2,#app .r,#app .specs>div,#app .co form,#app .sum,#app .tb';
+  let i=0,last=-1;document.querySelectorAll(sel).forEach(e=>{if(!e.classList.contains('rv')){e.classList.add('rv');e.style.setProperty('--d',e.matches('.card')?i%4:0)}i++;io.observe(e)});
+  par=[...document.querySelectorAll('#app .card,#app .gal')];upd();
+}
+let tick=false;
+function upd(){tick=false;const h=innerHeight;par.forEach(e=>{const r=e.getBoundingClientRect();e.style.setProperty('--py',RM?'0px':((r.top+r.height/2-h/2)/h*-26).toFixed(1)+'px')});$('header').classList.toggle('sc',scrollY>10)}
+addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);
+new MutationObserver(bindFx).observe($('#app'),{childList:true});
+if(matchMedia('(hover:hover)').matches&&!RM){
+  $('#app').addEventListener('mousemove',e=>{const c=e.target.closest('.card');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',((e.clientX-r.left)/r.width*2-1).toFixed(2));c.style.setProperty('--my',((e.clientY-r.top)/r.height*2-1).toFixed(2));c.style.setProperty('--sx',((e.clientX-r.left)/r.width*2-1).toFixed(2));c.style.setProperty('--sy',((e.clientY-r.top)/r.height*2-1).toFixed(2))});
+  $('#app').addEventListener('mouseout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget)){['--mx','--my','--sx','--sy'].forEach(v=>c.style.removeProperty(v))}});
+}
+save();route();
+</script></body></html>
