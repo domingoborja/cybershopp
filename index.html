@@ -1034,6 +1034,12 @@ footer h4{margin:0 0 14px;font:500 12px var(--sans);letter-spacing:.2em;color:va
 .wbtn:hover{background:var(--brown);color:#fff;transform:translateY(-2px)}
 .qk{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
 .qk button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:8px 14px;font-size:13px;text-transform:none;letter-spacing:0}.qk button:hover{border-color:var(--ink)}
+
+/* v14 */
+:root{--brown:#c7bcaa;--brown-d:#7d7060}
+.soc a:hover{color:var(--brown-d)}
+.wbtn{display:none}
+@media(max-width:760px){.ft{grid-template-columns:1fr 1fr!important;gap:28px 20px}.fb,.fc{grid-column:1/-1}.fl a{overflow-wrap:anywhere}}
 </style></head>
 <body>
 <header><div class="mq" aria-label="Frases de la tienda"><div id="mqi"></div></div><div class="wrap bar">
@@ -1046,7 +1052,7 @@ footer h4{margin:0 0 14px;font:500 12px var(--sans);letter-spacing:.2em;color:va
 <footer><div class="wrap"><div class="ft"><div class="fb"><span class="flogo" role="img" aria-label="Logo de Cyber Shopp"></span><b class="fn">Cyber Shopp</b><span>Pocas piezas, bien elegidas.</span><div class="soc" id="soc"></div></div>
 <div><h4>TIENDA</h4><nav class="fl"><a href="#/">Inicio</a><a href="#/ofertas">Ofertas</a><a href="#" id="fch" target="_blank" rel="noopener">Canal de difusión</a></nav></div>
 <div><h4>AYUDA</h4><nav class="fl"><a href="#/ayuda">Centro de ayuda</a><a href="#/terminos">Términos y condiciones</a><a href="#/privacidad">Política de privacidad</a><a href="#/reclamaciones">Libro de reclamaciones</a></nav></div>
-<div class="fc"><h4>CONTACTO</h4><p class="fh">Lunes a domingo</p><a class="wbtn" id="fwb" href="#/contacto">WhatsApp</a></div></div>
+<div class="fc"><h4>CONTACTO</h4><nav class="fl"><a href="#/contacto">WhatsApp</a><a href="#" id="ftel"></a><span>Lunes a domingo</span></nav></div></div>
 <div class="fbt"><span>© 2026 Cyber Shopp</span></div></div></footer>
 <div class="ov" id="ov"></div>
 <aside id="dr" aria-label="Carrito de compras" aria-hidden="true"></aside>
@@ -1155,16 +1161,16 @@ function reviewPage(id){
 }
 function contactPage(){
   track('contacto_ver');
-  $('#app').innerHTML=`<div class="wrap"><div class="co" style="grid-template-columns:1fr;max-width:640px"><form id="wf"><h1>Escríbenos por WhatsApp 💬</h1><p class="note" style="text-transform:none;margin:0 0 20px">Cuéntanos quién eres y en qué te ayudamos. Abriremos WhatsApp con tu mensaje listo para enviar. Atendemos de lunes a domingo.</p>
+  $('#app').innerHTML=`<div class="wrap"><div class="co" style="grid-template-columns:1fr;max-width:640px"><form id="wf"><h1>Escríbenos por WhatsApp</h1><p class="note" style="text-transform:none;margin:0 0 20px">Cuéntanos quién eres y en qué te ayudamos. Abriremos WhatsApp con tu mensaje listo para enviar. Atendemos de lunes a domingo.</p>
   <section class="cs"><label class="full">Tu nombre<input name="n" required maxlength="40" autocomplete="name" placeholder="Ej. María"></label>
   <label class="full">¿En qué te ayudamos?<textarea name="m" rows="4" required maxlength="300" placeholder="Cuéntanos qué necesitas"></textarea></label>
-  <div class="qk">${['Quiero hacer un pedido 🛒','Consulta sobre un producto 🔎','Estado de mi pedido 📦','Pagos y envíos 💳'].map(x=>`<button type="button">${x}</button>`).join('')}</div></section>
+  <div class="qk">${['Quiero hacer un pedido','Consulta sobre un producto','Estado de mi pedido','Pagos y envíos'].map(x=>`<button type="button">${x}</button>`).join('')}</div></section>
   <button class="btn" style="width:100%">Continuar a WhatsApp</button><p class="note" style="text-transform:none">Al continuar aceptas nuestra <a href="#/privacidad" style="text-decoration:underline">política de privacidad</a>.</p></form></div></div>`;
   const f=$('#wf');
-  f.querySelectorAll('.qk button').forEach(b=>b.onclick=()=>{f.elements.m.value=b.textContent.replace(/\s*\S+$/,'').trim();f.elements.m.focus()});
+  f.querySelectorAll('.qk button').forEach(b=>b.onclick=()=>{f.elements.m.value=b.textContent;f.elements.m.focus()});
   f.onsubmit=e=>{e.preventDefault();const n=f.elements.n.value.trim(),m=f.elements.m.value.trim();track('contacto');
     const url=`https://wa.me/${CONFIG.whatsapp}?text=`+encodeURIComponent(`¡Hola Cyber Shopp! 👋 Soy ${n} 😊, ayúdame en: ${m} 🙏✨`);window.open(url,'_blank');
-    $('#app').innerHTML=`<div class="terms wrap"><h1>¡Listo, ${esc(n)}! 🎉</h1><p>Se abrió WhatsApp con tu mensaje: solo pulsa enviar. Te responderemos de lunes a domingo. 💬</p><div class="acts"><a class="btn o" href="${url}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a><a class="btn o" href="#/">Volver a la tienda</a></div></div>`}
+    $('#app').innerHTML=`<div class="terms wrap"><h1>¡Listo, ${esc(n)}!</h1><p>Se abrió WhatsApp con tu mensaje: solo pulsa enviar. Te responderemos de lunes a domingo.</p><div class="acts"><a class="btn o" href="${url}" target="_blank" rel="noopener">Abrir WhatsApp otra vez</a><a class="btn o" href="#/">Volver a la tienda</a></div></div>`}
 }
 function claimPage(){
   track('reclamos_ver');const N=CONFIG.negocio;
@@ -1266,13 +1272,14 @@ function deliveryPage(){
   <label class="full">Referencia: nombre de la sede de la agencia<input name="sede" maxlength="100" placeholder="Ej. Shalom - Av. Arequipa 1234, Lince"></label></div>
   <div id="bmo" hidden><label class="full">Referencia<input name="referencia" maxlength="120" placeholder="Ej. frente al parque, casa de reja negra"></label>
   <label class="full">Rango de horas del envío<select name="horario"><option value="">Selecciona</option>${HORAS.map(h=>`<option>${h}</option>`).join('')}</select></label>
-  <p class="note" style="margin:0 0 8px">Marca tu ubicación exacta: toca el mapa o arrastra el marcador.</p><div id="map"></div><div class="mpb"><button type="button" class="btn o sm" id="gps">Usar mi ubicación</button><span class="note" id="mpn"></span></div><input type="hidden" name="lat"><input type="hidden" name="lng"></div>
+  <p class="note" style="margin:0 0 8px">Marca tu ubicación exacta: toca el mapa o arrastra el marcador.</p><div id="map"></div><div class="mpb"><button type="button" class="btn o sm" id="gps">Usar mi ubicación</button><span class="note" id="mpn"></span></div><input type="hidden" name="lat"><input type="hidden" name="lng"><input type="hidden" name="osm"></div>
   <label class="full">Mensaje (opcional)<textarea name="mensaje" rows="3" maxlength="300"></textarea></label></section>
   <button class="btn" id="nx">Continuar al pago</button></form>${sumHTML(T)}</div></div>${bar(T,'<button type="button" class="btn" id="sbn">Continuar al pago</button>')}`;
   const f=$('#df'),g=n=>f.elements[n];
   const fill=(el,arr)=>{el.innerHTML='<option value="">Selecciona</option>'+arr.map(x=>`<option>${x}</option>`).join('');el.disabled=!arr.length};
   const metro=()=>{const d=g('departamento').value,p=g('provincia').value;return (d=='Lima'&&p=='Lima')||(d=='Callao'&&p.includes('Callao'))};
-  const setPos=(ll,z)=>{if(!mk)return;mk.setLatLng(ll);g('lat').value=(+ll.lat).toFixed(6);g('lng').value=(+ll.lng).toFixed(6);$('#mpn').textContent='Ubicación marcada. Puedes ajustarla arrastrando el marcador.';if(z)map.setView(ll,z)};
+  const setPos=(ll,z)=>{if(!mk)return;mk.setLatLng(ll);const la=(+ll.lat).toFixed(6),lo=(+ll.lng).toFixed(6);g('lat').value=la;g('lng').value=lo;g('osm').value='';$('#mpn').textContent='Ubicación marcada. Puedes ajustarla arrastrando el marcador.';if(z)map.setView(ll,z);
+    try{fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&accept-language=es&lat=${la}&lon=${lo}`).then(r=>r.json()).then(j=>{if(j&&j.display_name&&g('lat').value==la){g('osm').value=j.display_name.slice(0,200);$('#mpn').textContent='Ubicación marcada: '+j.display_name}}).catch(()=>{})}catch(x){}};
   function initMap(){
     if(map){setTimeout(()=>map.invalidateSize(),60);return}
     const go=err=>{if(err||!window.L){$('#mpn').textContent='No se pudo cargar el mapa. Escribe bien tu dirección y referencia.';return}
@@ -1295,7 +1302,7 @@ function deliveryPage(){
   ['nombre','paterno','materno','direccion','complemento','referencia','sede','agencia_otro','mensaje'].forEach(n=>{const el=g(n);el.setAttribute('autocapitalize','characters');el.addEventListener('input',()=>{const a=el.selectionStart,b=el.selectionEnd,u=el.value.toUpperCase();if(u!==el.value){el.value=u;try{el.setSelectionRange(a,b)}catch(x){}}})});
   if(ord){const set=(n,v)=>{if(v!=null)g(n).value=v};['nombre','paterno','materno','celular','dni'].forEach(n=>set(n,ord[n]));
     set('departamento',ord.departamento);g('departamento').dispatchEvent(new Event('change'));set('provincia',ord.provincia);g('provincia').dispatchEvent(new Event('change'));set('distrito',ord.distrito);
-    const r=f.querySelector(`[name=tipo][value=${ord.tipo}]`);if(r&&!r.disabled)r.checked=true;['direccion','complemento','agencia','agencia_otro','sede','referencia','horario','lat','lng','mensaje'].forEach(n=>set(n,ord[n]));tipo()}
+    const r=f.querySelector(`[name=tipo][value=${ord.tipo}]`);if(r&&!r.disabled)r.checked=true;['direccion','complemento','agencia','agencia_otro','sede','referencia','horario','lat','lng','osm','mensaje'].forEach(n=>set(n,ord[n]));tipo()}
   $('#sbn').onclick=()=>$('#nx').click();
   f.onsubmit=e=>{e.preventDefault();const v=(f.querySelector('[name=tipo]:checked')||{}).value;if(v=='moto'&&!g('lat').value){$('#mpn').textContent='Marca tu ubicación exacta en el mapa para continuar.';$('#map').scrollIntoView({block:'center'});return}ord=Object.fromEntries(new FormData(f));location.hash='#/pago'};
 }
@@ -1304,7 +1311,7 @@ let vf=null;
 function payPage(){
   const T=tot();if(!T.ids.length)return empty();if(!ord){location.hash='#/entrega';return}
   track('pago_inicio');okPromo();const o=ord,PG=CONFIG.pagos,money=fm(T.total-T.disc);
-  const dir=esc(o.direccion)+(o.complemento?', '+esc(o.complemento):''),ent=o.tipo=='moto'?`Motorizado, de ${esc(o.horario)}. Ref.: ${esc(o.referencia)}`:`Recojo en agencia ${esc(o.agencia=='Otro'?o.agencia_otro:o.agencia)}, sede: ${esc(o.sede)}`;
+  const dir=esc(o.direccion)+(o.complemento?', '+esc(o.complemento):''),ent=o.tipo=='moto'?`Motorizado, de ${esc(o.horario)}. Ref.: ${esc(o.referencia)}<br>Ubicación: ${o.osm?esc(o.osm)+' · ':''}<a href="https://www.openstreetmap.org/?mlat=${o.lat}&amp;mlon=${o.lng}#map=18/${o.lat}/${o.lng}" target="_blank" rel="noopener" style="text-decoration:underline">Ver en OpenStreetMap</a>`:`Recojo en agencia ${esc(o.agencia=='Otro'?o.agencia_otro:o.agencia)}, sede: ${esc(o.sede)}`;
   const M=[['yapeplin','Yape / Plin','Escanea el QR y paga',IC_QR],['transf','Transferencia','Interbank o desde otros bancos',IC_BANK],['cod','Contraentrega','Pagas al recibir, sin cargos adicionales',IC_CASH]];
   const needV=m=>m!='cod';
   $('#app').innerHTML=`<div class="wrap">${stepper(3)}<div class="co"><form id="pf"><h1>Pago</h1>
@@ -1330,7 +1337,7 @@ function payPage(){
     if(needV(m)&&!vf){cn.textContent='Adjunta la captura o constancia de tu pago para continuar.';return}
     const items=Object.keys(cart).filter(i=>P.some(p=>p.id==i)).map(i=>`- ${P.find(p=>p.id==i).name} x${cart[i]}`),PN={yapeplin:'Yape / Plin',transf:'Transferencia Interbank',cod:'Contraentrega'};
     track('pedido_'+m,moto?'motorizado':ag);
-    const msg=['NUEVO PEDIDO','Forma de pago: '+PN[m]+(needV(m)?' (adjunto mi evidencia de pago a continuación)':' (pago al recibir)'),'Cliente: '+[x('nombre'),x('paterno'),x('materno')].join(' '),'DNI: '+x('dni'),'Celular: +51 '+x('celular'),'Ubicación: '+[x('distrito'),x('provincia'),x('departamento')].join(', '),'Dirección: '+x('direccion')+(x('complemento')?' ('+x('complemento')+')':''),'Tipo de entrega: '+(moto?'Motorizado':'Recojo en agencia'),...(moto?['Rango de horas: '+x('horario'),'Referencia: '+x('referencia'),'Mapa: https://www.google.com/maps?q='+x('lat')+','+x('lng')]:['Agencia: '+ag,'Sede de la agencia: '+x('sede')]),'Productos:',...items,'Total a pagar: '+money+' (código '+CODE+' aplicado, envío incluido)',x('mensaje')?'Mensaje: '+x('mensaje'):''].filter(Boolean).join('\n');
+    const msg=['NUEVO PEDIDO','Forma de pago: '+PN[m]+(needV(m)?' (adjunto mi evidencia de pago a continuación)':' (pago al recibir)'),'Cliente: '+[x('nombre'),x('paterno'),x('materno')].join(' '),'DNI: '+x('dni'),'Celular: +51 '+x('celular'),'Ubicación: '+[x('distrito'),x('provincia'),x('departamento')].join(', '),'Dirección: '+x('direccion')+(x('complemento')?' ('+x('complemento')+')':''),'Tipo de entrega: '+(moto?'Motorizado':'Recojo en agencia'),...(moto?['Rango de horas: '+x('horario'),'Referencia: '+x('referencia'),'Ubicación (OpenStreetMap): https://www.openstreetmap.org/?mlat='+x('lat')+'&mlon='+x('lng')+'#map=18/'+x('lat')+'/'+x('lng'),...(x('osm')?['Dirección según el mapa: '+x('osm')]:[]),'Google Maps: https://www.google.com/maps?q='+x('lat')+','+x('lng')]:['Agencia: '+ag,'Sede de la agencia: '+x('sede')]),'Productos:',...items,'Total a pagar: '+money+' (código '+CODE+' aplicado, envío incluido)',x('mensaje')?'Mensaje: '+x('mensaje'):''].filter(Boolean).join('\n');
     const url=`https://wa.me/${CONFIG.whatsapp}?text=`+encodeURIComponent(msg),v=needV(m)?vf:null,nm=x('nombre');
     window.open(url,'_blank');vf=null;ord=null;cart={};save();
     const can=v&&navigator.canShare&&navigator.canShare({files:[v]});
@@ -1350,7 +1357,7 @@ document.documentElement.style.setProperty('--logo','url("'+$('.brand img').src+
 {const S=(p,c='')=>`<svg viewBox="0 0 24 24" class="${c}" aria-hidden="true">${p}</svg>`,IC={Instagram:S('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/>'),Facebook:S('<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>'),TikTok:S('<path d="M16 3v10.5a4.5 4.5 0 1 1-4.5-4.5M16 3c.4 2.6 2.2 4.4 5 4.7"/>'),'WhatsApp Business':S('<path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97s-.47-.15-.67.15-.77.97-.94 1.16-.35.22-.64.07a8.1 8.1 0 0 1-2.39-1.48 9 9 0 0 1-1.65-2.06c-.17-.3-.02-.46.13-.6l.45-.52c.15-.17.2-.3.3-.5s.05-.37-.03-.52-.67-1.61-.92-2.2c-.24-.58-.49-.5-.67-.51h-.57a1.1 1.1 0 0 0-.79.37A3.3 3.3 0 0 0 6.8 9.3a5.7 5.7 0 0 0 1.2 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41s.25-1.29.17-1.41-.27-.2-.57-.35z"/><path d="M12.05 21.8a9.9 9.9 0 0 1-5.03-1.38L3.3 21.4l1-3.65A9.9 9.9 0 1 1 12.05 21.8z"/>')};
 const L={Instagram:CONFIG.social.Instagram,Facebook:CONFIG.social.Facebook,TikTok:CONFIG.social.TikTok,'WhatsApp Business':'https://wa.me/'+CONFIG.whatsapp};
 $('#soc').innerHTML=Object.entries(L).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener" aria-label="${n}" title="${n}">${IC[n]}</a>`).join('');
-$('#fwb').insertAdjacentHTML('afterbegin',IC['WhatsApp Business']);}
+const w=CONFIG.whatsapp,ft=$('#ftel');ft.href='tel:+'+w;ft.textContent='+'+w.slice(0,2)+' '+w.slice(2).replace(/(\d{3})(\d{3})(\d{3})/,'$1 $2 $3');}
 /* ===== frases, anuncio y chat ===== */
 {const g=[...CONFIG.phrases,...CONFIG.phrases].map(x=>`<span>${esc(x)}</span>`).join('');$('#mqi').innerHTML=`<div class="g">${g}</div><div class="g" aria-hidden="true">${g}</div>`}
 const an=$('#an'),ab=$('#ab');
